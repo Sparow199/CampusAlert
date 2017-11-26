@@ -6,6 +6,14 @@
 
     <data>
         <variable name="isLoading" type="boolean" />
+
+        <variable
+            name="alert"
+            type="lahzouz.com.campusalert.service.model.Alert" />
+
+        <variable
+            name="callback"
+            type="lahzouz.com.campusalert.view.callback.AlertClickCallback " />
         <variable name="alertViewModel" type="lahzouz.com.campusalert.viewmodel.AlertViewModel"/>
     </data>
 
@@ -50,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/alert_type"
                 android:paddingBottom="5dp"
-                android:text="@{alertViewModel.alert.getType()}"
+                android:text="@{alert.getType()}"
                 android:textAlignment="center"
                 android:textSize="@dimen/alert_header1"
                 android:textStyle="bold" />
@@ -60,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/alert_date"
-                android:text="@{String.format(@string/alert_date, alertViewModel.alert.getCreated_at())}"
+                android:text="@{String.format(@string/alert_date, alert.getCreated_at())}"
                 android:textSize="@dimen/alert_text" />
 
             <TextView
@@ -68,11 +76,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/description"
-                android:text="@{alertViewModel.alert.getDescription()}"
+                android:text="@{alert.getDescription()}"
                 android:textSize="@dimen/alert_header2" />
 
-
         </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:adjustViewBounds="false"
+            android:onClick="@{() -> callback.onDeleteClick(alert)}"
+            android:src="@android:drawable/ic_delete"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/colorAccent"
+            app:fabSize="normal" />
 
     </android.support.design.widget.CoordinatorLayout>
 

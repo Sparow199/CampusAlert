@@ -11,17 +11,31 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
+
 import lahzouz.com.campusalert.R;
 import lahzouz.com.campusalert.databinding.FragmentAlertListBinding;
 import lahzouz.com.campusalert.service.model.Alert;
 import lahzouz.com.campusalert.view.adapter.AlertAdapter;
 import lahzouz.com.campusalert.view.callback.AlertClickCallback;
 import lahzouz.com.campusalert.viewmodel.AlertListViewModel;
-import java.util.List;
 
 
 public class AlertListFragment extends Fragment implements LifecycleOwner {
     public static final String TAG = "AlertListFragment";
+    private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
+        @Override
+        public void onClick(Alert alert) {
+            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+                ((MainActivity) getActivity()).show(alert);
+            }
+        }
+
+        @Override
+        public void onDeleteClick(Alert alert) {
+        }
+    };
     private AlertAdapter alertAdapter;
     private FragmentAlertListBinding binding;
     private AlertListViewModel viewModelList;
@@ -35,7 +49,6 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
         alertAdapter = new AlertAdapter(alertClickCallback);
         binding.alertList.setAdapter(alertAdapter);
         binding.setIsLoading(true);
-
         return binding.getRoot();
     }
 
@@ -46,7 +59,6 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
         observeViewModel(viewModelList);
 
     }
-
 
     private void observeViewModel(AlertListViewModel viewModel) {
         // Update the list when the data changes
@@ -60,24 +72,4 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
             }
         });
     }
-
-    private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
-        @Override
-        public void onClick(Alert alert) {
-            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                ((MainActivity) getActivity()).show(alert);
-            }
-        }
-
-        @Override
-        public void onDeleteButtonClick(Alert alert) {
-            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                if(alert!=null){
-                    viewModelList.deleteAlert(alert);
-                }
-
-            }
-
-        }
-    };
 }

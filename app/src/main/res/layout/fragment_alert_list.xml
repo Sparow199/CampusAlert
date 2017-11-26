@@ -62,7 +62,7 @@
             android:onClick="@{}"
             android:src="@android:drawable/ic_input_add"
             android:tint="@android:color/white"
-            app:backgroundTint="@color/colorAccent"
+            app:backgroundTint="@color/colorPrimary"
             app:fabSize="normal" />
 
     </android.support.design.widget.CoordinatorLayout>

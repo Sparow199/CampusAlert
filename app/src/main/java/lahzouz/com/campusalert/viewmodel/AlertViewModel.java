@@ -49,6 +49,10 @@ public class AlertViewModel extends AndroidViewModel {
         appDatabase.AlertModel().delete(alert);
     }
 
+    public Alert getAlert(long alertId) {
+        return appDatabase.AlertModel().getAlert(alertId);
+    }
+
     /**
      * A creator is used to inject the alert ID into the ViewModel
      */

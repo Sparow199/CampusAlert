@@ -1,13 +1,10 @@
 <resources>
     <string name="app_name">Campus Alert</string>
     <string name="loading_alerts">Loading alerts …</string>
-
     <string name="alerts_list">Alert list</string>
-
     <string name="alert_logo">Logo</string>
 
     <string name="campus_alerts">Alerts list</string>
-
     <string name="alert_list">Alert List</string>
 
     <string name="type">Alert type</string>
@@ -20,15 +17,15 @@
 
     <string name="button_delete">Delete</string>
 
-    <string-array name="alert_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+
+    <!--alert_type_array -->
+    <string-array name="alert_type_array">
+        <item>Arbre à tailler</item>
+        <item>Arbre à abattre</item>
+        <item>Détritus</item>
+        <item>Haie à tailler</item>
+        <item>Mauvaise herbe</item>
+        <item>Autre</item>
     </string-array>
 
 </resources>

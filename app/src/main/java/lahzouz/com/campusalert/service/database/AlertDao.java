@@ -24,8 +24,12 @@ public interface AlertDao {
     @Query("SELECT * FROM alert_table WHERE alert_id = :alertId LIMIT 1")
     LiveData<Alert> findOneAlert(Long alertId);
 
+    @Query("SELECT * FROM alert_table WHERE alert_id = :alertId LIMIT 1")
+    Alert getAlert(Long alertId);
+
     @Insert(onConflict = REPLACE)
     void insertOne(Alert alert);
+
 
     @Insert(onConflict = REPLACE)
     void insertAll(List<Alert> alerts);
