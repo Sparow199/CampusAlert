@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable name="isLoading" type="boolean" />
         <variable name="alertViewModel" type="lahzouz.com.campusalert.viewmodel.AlertViewModel"/>
     </data>
 
-    <FrameLayout
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context="lahzouz.com.campusalert.view.ui.AlertFragment">
 
         <TextView
             android:id="@+id/loading_alert"
@@ -63,12 +67,13 @@
                 android:id="@+id/alert_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/alert_description"
+                android:contentDescription="@string/description"
                 android:text="@{alertViewModel.alert.getDescription()}"
                 android:textSize="@dimen/alert_header2" />
 
 
         </LinearLayout>
 
-    </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
 </layout>

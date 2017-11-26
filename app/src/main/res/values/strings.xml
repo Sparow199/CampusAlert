@@ -10,14 +10,13 @@
 
     <string name="alert_list">Alert List</string>
 
-
     <string name="type">Alert type</string>
     <string name="alert_type">Type: %s</string>
 
     <string name="date">Alert date</string>
     <string name="alert_date">Created: %s</string>
 
-    <string name="alert_description">Alert Description</string>
+    <string name="description">Alert Description</string>
 
     <string name="button_delete">Delete</string>
 

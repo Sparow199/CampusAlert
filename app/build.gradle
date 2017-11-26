@@ -52,7 +52,7 @@ dependencies {
     implementation  "com.android.support:recyclerview-v7:$project.appcompat"
     implementation  "com.android.support.constraint:constraint-layout:$project.constraintLayout"
     implementation  "com.android.support:support-v4:$project.appcompat"
-    //implementation  'com.android.support:design:26.1.0'
+    implementation  "com.android.support:design:$project.appcompat"
 
     // Lifecycle
     implementation  "android.arch.lifecycle:runtime:1.0.3"
