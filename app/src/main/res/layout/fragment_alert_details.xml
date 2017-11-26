@@ -44,6 +44,13 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             app:visibleGone="@{!isLoading}">
 
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/alert_type_array"
+                android:prompt="@string/types" />
+
 
             <ImageView
                 android:id="@+id/imageView"
@@ -72,6 +79,22 @@
                 android:textSize="@dimen/alert_text" />
 
             <TextView
+                android:id="@+id/alert_long"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/alert_lati"
+                android:text="@{String.format(@string/alert_long, alert.getLongitude())}"
+                android:textSize="@dimen/alert_text" />
+
+            <TextView
+                android:id="@+id/alert_lati"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/alert_lati"
+                android:text="@{String.format(@string/alert_lati, alert.getLatitude())}"
+                android:textSize="@dimen/alert_text" />
+
+            <TextView
                 android:id="@+id/alert_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,6 +103,8 @@
                 android:textSize="@dimen/alert_header2" />
 
         </LinearLayout>
+
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floating_action_button"
