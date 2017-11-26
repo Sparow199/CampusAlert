@@ -17,95 +17,57 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|center_horizontal"
-            android:text="@string/loading_alert"
+            android:text="@string/loading_alerts"
             android:textAlignment="center"
             app:visibleGone="@{isLoading}"/>
 
         <LinearLayout
-            android:layout_marginStart="@dimen/item_horizontal_margin"
-            android:layout_marginEnd="@dimen/item_horizontal_margin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/item_horizontal_margin"
+            android:layout_marginStart="@dimen/item_horizontal_margin"
             android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical"
             android:padding="5dp"
             android:paddingTop="@dimen/activity_vertical_margin"
-            android:orientation="vertical"
             app:visibleGone="@{!isLoading}">
+
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="@dimen/logo_width"
                 android:layout_height="@dimen/logo_height"
+                android:contentDescription="@string/alert_logo"
                 android:src="@drawable/logo" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/alert_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/alert_name"
-                android:textStyle="bold"
-                android:textSize="@dimen/alert_header1"
-                android:text="@{alertViewModel.alert.name}"
+                android:contentDescription="@string/alert_type"
+                android:paddingBottom="5dp"
+                android:text="@{alertViewModel.alert.getType()}"
                 android:textAlignment="center"
-                android:paddingBottom="5dp"/>
+                android:textSize="@dimen/alert_header1"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/alert_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/alert_date"
+                android:text="@{String.format(@string/alert_date, alertViewModel.alert.getCreated_at())}"
+                android:textSize="@dimen/alert_text" />
 
             <TextView
                 android:id="@+id/alert_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/alert_description"
-                android:textSize="@dimen/alert_header2"
-                android:text="@{alertViewModel.alert.description}"/>
+                android:text="@{alertViewModel.alert.getDescription()}"
+                android:textSize="@dimen/alert_header2" />
 
 
-            <TextView
-                android:id="@+id/languages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/alert_language"
-                android:textSize="@dimen/alert_text"
-                android:text="@{String.format(@string/languages, alertViewModel.alert.language)}"/>
-
-            <TextView
-                android:id="@+id/alert_watchers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/alert_watchers"
-                android:textSize="@dimen/alert_text"
-                android:text="@{String.format(@string/watchers, alertViewModel.alert.watchers)}"/>
-
-            <TextView
-                android:id="@+id/alert_open_issues"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/open_issues"
-                android:textSize="@dimen/alert_text"
-                android:text="@{String.format(@string/openIssues, alertViewModel.alert.open_issues)}"/>
-
-
-            <TextView
-                android:id="@+id/alert_created_at"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="Created At"
-                android:textSize="@dimen/alert_text"
-                android:text="@{String.format(@string/created_at, alertViewModel.alert.created_at)}"/>
-
-            <TextView
-                android:id="@+id/alert_updated_at"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="Updated At"
-                android:textSize="@dimen/alert_text"
-                android:text="@{String.format(@string/updated_at, alertViewModel.alert.updated_at)}"/>
-
-            <TextView
-                android:id="@+id/clone_url"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/open_issues"
-                android:textSize="@dimen/alert_text"
-                android:text="@{String.format(@string/clone_url, alertViewModel.alert.clone_url)}"/>
         </LinearLayout>
 
     </FrameLayout>

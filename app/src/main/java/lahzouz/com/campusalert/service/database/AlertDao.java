@@ -6,9 +6,9 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import lahzouz.com.campusalert.service.model.Alert;
-
 import java.util.List;
+
+import lahzouz.com.campusalert.service.model.Alert;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
@@ -18,14 +18,11 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 @Dao
 public interface AlertDao {
-    @Query("SELECT * FROM Alert")
+    @Query("SELECT * FROM alert_table")
     LiveData<List<Alert>> getAll();
 
-    @Query("SELECT *FROM Alert WHERE alert_name = :alertName LIMIT 1")
-    LiveData<Alert> findOneProject(String alertName);
-
-    @Query("SELECT * FROM Alert WHERE id IN (:alertIds)")
-    List<Alert> loadAllByIds(int[] alertIds);
+    @Query("SELECT * FROM alert_table WHERE alert_id = :alertId LIMIT 1")
+    LiveData<Alert> findOneAlert(Long alertId);
 
     @Insert(onConflict = REPLACE)
     void insertOne(Alert alert);
@@ -36,6 +33,6 @@ public interface AlertDao {
     @Delete
     void delete(Alert alert);
 
-    @Query("DELETE FROM Alert")
+    @Query("DELETE FROM alert_table")
     int deleteAll();
 }

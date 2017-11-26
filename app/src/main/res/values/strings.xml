@@ -1,21 +1,35 @@
 <resources>
     <string name="app_name">Campus Alert</string>
-    <string name="loading_alerts">Loading alerts ...</string>
+    <string name="loading_alerts">Loading alerts …</string>
+
     <string name="alerts_list">Alert list</string>
-    <string name="alert_name">Name of the alert</string>
-    <string name="github_alerts">Alerts list</string>
+
+    <string name="alert_logo">Logo</string>
+
+    <string name="campus_alerts">Alerts list</string>
+
     <string name="alert_list">Alert List</string>
-    <string name="languages">Languages: %s</string>
-    <string name="watchers">Watchers: %s</string>
-    <string name="openIssues">Open Issues: %s</string>
-    <string name="created_at">Created At: %s</string>
-    <string name="updated_at">Updated At: %s</string>
-    <string name="clone_url">Clone URL: %s</string>
-    <string name="alert_language">Alert Language</string>
-    <string name="alert_watchers">Alert Watchers</string>
+
+
+    <string name="type">Alert type</string>
+    <string name="alert_type">Type: %s</string>
+
+    <string name="date">Alert date</string>
+    <string name="alert_date">Created: %s</string>
+
     <string name="alert_description">Alert Description</string>
-    <string name="open_issues">Open Issues</string>
-    <string name="loading_alert">Loading Alert ...</string>
 
     <string name="button_delete">Delete</string>
+
+    <string-array name="alert_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+
 </resources>

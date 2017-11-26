@@ -33,5 +33,5 @@ public abstract class AppDatabase extends RoomDatabase {
         INSTANCE = null;
     }
 
-    public abstract AlertDao ProjectModel();
+    public abstract AlertDao AlertModel();
 }

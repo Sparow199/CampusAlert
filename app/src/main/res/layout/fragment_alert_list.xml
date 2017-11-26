@@ -32,19 +32,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textSize="@dimen/alert_header1"
-                android:text="@string/github_alerts"
-                android:textStyle="bold"
-                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:textAlignment="center"/>
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="@string/campus_alerts"
+                android:textAlignment="center"
+                android:textSize="@dimen/alert_header1"
+                android:textStyle="bold" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/alert_list"
-                android:contentDescription="@string/alert_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/alert_list"
                 app:layoutManager="LinearLayoutManager"/>
 
         </LinearLayout>

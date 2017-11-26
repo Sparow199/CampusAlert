@@ -7,20 +7,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import java.util.List;
+import java.util.Objects;
+
 import lahzouz.com.campusalert.R;
 import lahzouz.com.campusalert.databinding.AlertListItemBinding;
 import lahzouz.com.campusalert.service.model.Alert;
 import lahzouz.com.campusalert.view.callback.AlertClickCallback;
 
-import java.util.List;
-import java.util.Objects;
-
 public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHolder> {
-
-    private List<? extends Alert> alertList;
 
     @Nullable
     private final AlertClickCallback alertClickCallback;
+    private List<? extends Alert> alertList;
 
     public AlertAdapter(@Nullable AlertClickCallback alertClickCallback) {
         this.alertClickCallback = alertClickCallback;
@@ -52,7 +51,7 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHol
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     Alert alert = alertList.get(newItemPosition);
                     Alert old = AlertAdapter.this.alertList.get(oldItemPosition);
-                    return alert.id == old.id && Objects.equals(alert.git_url, old.git_url);
+                    return alert.id == old.id && Objects.equals(alert.getAdress(), old.getAdress());
                 }
             });
 

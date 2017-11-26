@@ -13,14 +13,13 @@ import lahzouz.com.campusalert.service.model.Alert;
 
 
 public class AlertViewModel extends AndroidViewModel {
-    private AppDatabase appDatabase;
     private final LiveData<Alert> alertObservable;
-    private final String alertId;
-
+    private final long alertId;
     public ObservableField<Alert> alert = new ObservableField<>();
+    private AppDatabase appDatabase;
 
     public AlertViewModel(@NonNull Application application,
-                          final String alertId) {
+                          final long alertId) {
         super(application);
         this.alertId = alertId;
         appDatabase = AppDatabase.getAppDatabase(application.getApplicationContext());
@@ -29,7 +28,7 @@ public class AlertViewModel extends AndroidViewModel {
      * Etape == 04 -->> prochaine étape -->> AlertListFragment
      **********************************************************************************************/
         // uncomment to switch to Database mode
-        alertObservable = appDatabase.ProjectModel().findOneProject(alertId);
+        alertObservable = appDatabase.AlertModel().findOneAlert(alertId);
         // uncomment to switch to Remote repository mode
 //        alertObservable = AlertRepository.getInstance().getProjectDetails("Apolline-Lille", alertId);
     /***********************************************************************************************
@@ -47,7 +46,7 @@ public class AlertViewModel extends AndroidViewModel {
 
 
     public void deleteAlert(Alert alert) {
-        appDatabase.ProjectModel().delete(alert);
+        appDatabase.AlertModel().delete(alert);
     }
 
     /**
@@ -58,9 +57,9 @@ public class AlertViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final String alertId;
+        private final long alertId;
 
-        public Factory(@NonNull Application application, String alertId) {
+        public Factory(@NonNull Application application, long alertId) {
             this.application = application;
             this.alertId = alertId;
         }

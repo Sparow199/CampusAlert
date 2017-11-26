@@ -2,7 +2,6 @@ package lahzouz.com.campusalert.view.ui;
 
 
 import android.arch.lifecycle.LifecycleOwner;
-
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -16,12 +15,24 @@ import android.view.ViewGroup;
 import lahzouz.com.campusalert.R;
 import lahzouz.com.campusalert.databinding.FragmentAlertDetailsBinding;
 import lahzouz.com.campusalert.service.model.Alert;
-
 import lahzouz.com.campusalert.viewmodel.AlertViewModel;
 
 public class AlertFragment extends Fragment implements LifecycleOwner{
     private static final String KEY_PROJECT_ID = "alert_id";
     private FragmentAlertDetailsBinding binding;
+
+    /**
+     * Creates alert fragment for specific alert ID
+     */
+    public static AlertFragment forAlert(long alertID) {
+        AlertFragment fragment = new AlertFragment();
+        Bundle args = new Bundle();
+
+        args.putLong(KEY_PROJECT_ID, alertID);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -38,7 +49,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         AlertViewModel.Factory factory = new AlertViewModel.Factory(
-                getActivity().getApplication(), getArguments().getString(KEY_PROJECT_ID));
+                getActivity().getApplication(), getArguments().getLong(KEY_PROJECT_ID));
 
         final AlertViewModel viewModel = ViewModelProviders.of(this, factory)
                 .get(AlertViewModel.class);
@@ -51,7 +62,6 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
 
     }
 
-
     private void observeViewModel(final AlertViewModel viewModel) {
         // Observe alert data
         viewModel.getObservableProject().observe(this, new Observer<Alert>() {
@@ -63,19 +73,6 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                 }
             }
         });
-    }
-
-
-
-    /** Creates alert fragment for specific alert ID */
-    public static AlertFragment forAlert(String alertID) {
-        AlertFragment fragment = new AlertFragment();
-        Bundle args = new Bundle();
-
-        args.putString(KEY_PROJECT_ID, alertID);
-        fragment.setArguments(args);
-
-        return fragment;
     }
 
 }

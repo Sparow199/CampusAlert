@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** Shows the alert detail fragment */
     public void show(Alert alert) {
-        AlertFragment alertFragment = AlertFragment.forAlert(alert.name);
+        AlertFragment alertFragment = AlertFragment.forAlert(alert.getId());
 
         getSupportFragmentManager()
                 .beginTransaction()
