@@ -30,7 +30,6 @@ public interface AlertDao {
     @Insert(onConflict = REPLACE)
     void insertOne(Alert alert);
 
-
     @Insert(onConflict = REPLACE)
     void insertAll(List<Alert> alerts);
 

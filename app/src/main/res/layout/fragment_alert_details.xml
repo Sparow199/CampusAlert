@@ -44,13 +44,6 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             app:visibleGone="@{!isLoading}">
 
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/alert_type_array"
-                android:prompt="@string/types" />
-
 
             <ImageView
                 android:id="@+id/imageView"
@@ -104,7 +97,12 @@
 
         </LinearLayout>
 
-
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/alert_type_array"
+            android:prompt="@string/alert_type" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floating_action_button"

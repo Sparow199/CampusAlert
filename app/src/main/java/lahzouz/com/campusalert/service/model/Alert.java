@@ -36,8 +36,8 @@ public class Alert {
      ***************************************************************************************************/
     @Ignore
     public Alert() {
-        longitude = -1;
-        latitude = -2;
+//        longitude = -1;
+//        latitude = -2;
     }
 
     public Alert(String type, String description, String adress, double latitude, double longitude, Date created_at) {
@@ -115,15 +115,13 @@ public class Alert {
                 '}';
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Alert)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Alert alert = (Alert) o;
 
-        if (id != alert.id) return false;
         if (getType() != null ? !getType().equals(alert.getType()) : alert.getType() != null)
             return false;
         return getAdress() != null ? getAdress().equals(alert.getAdress()) : alert.getAdress() == null;
@@ -131,8 +129,7 @@ public class Alert {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (getType() != null ? getType().hashCode() : 0);
+        int result = getType() != null ? getType().hashCode() : 0;
         result = 31 * result + (getAdress() != null ? getAdress().hashCode() : 0);
         return result;
     }

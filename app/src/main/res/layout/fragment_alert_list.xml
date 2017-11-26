@@ -5,7 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="isLoading" type="boolean" />
+
+        <variable
+            name="isLoading"
+            type="boolean" />
+
+        <variable
+            name="callback"
+            type="lahzouz.com.campusalert.view.callback.AlertClickCallback" />
+
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -47,6 +55,7 @@
                 android:id="@+id/alert_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
                 android:contentDescription="@string/alert_list"
                 app:layoutManager="LinearLayoutManager"/>
 
@@ -59,7 +68,7 @@
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
             android:adjustViewBounds="false"
-            android:onClick="@{}"
+            android:onClick="@{() -> callback.onAddClick()}"
             android:src="@android:drawable/ic_input_add"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorPrimary"

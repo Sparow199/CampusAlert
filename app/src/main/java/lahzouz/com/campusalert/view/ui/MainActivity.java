@@ -2,6 +2,7 @@ package lahzouz.com.campusalert.view.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import lahzouz.com.campusalert.R;
@@ -26,11 +27,27 @@ public class MainActivity extends AppCompatActivity {
     /** Shows the alert detail fragment */
     public void show(Alert alert) {
         AlertFragment alertFragment = AlertFragment.forAlert(alert.getId());
-
+        String fragmentName = alertFragment.getClass().getName();
         getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack("alert")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack(fragmentName)
                 .replace(R.id.fragment_container,
-                        alertFragment, null).commit();
+                        alertFragment, fragmentName).commit();
     }
+
+    /**
+     * Shows the new alert fragment
+     */
+    public void addNew() {
+        AlertNewFragment alertNewFragment = AlertNewFragment.forNewAlert();
+        String fragmentName = alertNewFragment.getClass().getName();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .addToBackStack(fragmentName)
+                .replace(R.id.fragment_container,
+                        alertNewFragment, fragmentName).commit();
+    }
+
 }

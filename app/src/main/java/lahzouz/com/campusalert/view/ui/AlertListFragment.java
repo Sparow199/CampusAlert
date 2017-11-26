@@ -35,6 +35,17 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
         @Override
         public void onDeleteClick(Alert alert) {
         }
+
+        public void onAddClick() {
+            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+                ((MainActivity) getActivity()).addNew();
+            }
+        }
+
+        @Override
+        public void onSaveClick(Alert alert) {
+        }
+
     };
     private AlertAdapter alertAdapter;
     private FragmentAlertListBinding binding;
@@ -48,6 +59,7 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
 
         alertAdapter = new AlertAdapter(alertClickCallback);
         binding.alertList.setAdapter(alertAdapter);
+        binding.setCallback(alertClickCallback);
         binding.setIsLoading(true);
         return binding.getRoot();
     }

@@ -24,15 +24,11 @@ public class AlertViewModel extends AndroidViewModel {
         this.alertId = alertId;
         appDatabase = AppDatabase.getAppDatabase(application.getApplicationContext());
 
-    /***********************************************************************************************
-     * Etape == 04 -->> prochaine étape -->> AlertListFragment
-     **********************************************************************************************/
         // uncomment to switch to Database mode
         alertObservable = appDatabase.AlertModel().findOneAlert(alertId);
         // uncomment to switch to Remote repository mode
 //        alertObservable = AlertRepository.getInstance().getProjectDetails("Apolline-Lille", alertId);
-    /***********************************************************************************************
-     **********************************************************************************************/
+
     }
 
     public LiveData<Alert> getObservableProject() {
@@ -49,9 +45,14 @@ public class AlertViewModel extends AndroidViewModel {
         appDatabase.AlertModel().delete(alert);
     }
 
+    public void insertAlert(Alert alert) {
+        appDatabase.AlertModel().insertOne(alert);
+    }
+
     public Alert getAlert(long alertId) {
         return appDatabase.AlertModel().getAlert(alertId);
     }
+
 
     /**
      * A creator is used to inject the alert ID into the ViewModel
@@ -73,5 +74,7 @@ public class AlertViewModel extends AndroidViewModel {
             //noinspection unchecked
             return (T) new AlertViewModel(application, alertId);
         }
+
+
     }
 }

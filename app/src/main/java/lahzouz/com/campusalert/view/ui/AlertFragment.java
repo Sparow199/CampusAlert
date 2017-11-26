@@ -8,7 +8,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +28,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         @Override
         public void onDeleteClick(Alert alert) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                //Log.d("DELETE", "onDeleteButtonClick: alertNull"+alert.toString());
-
                 if (alert != null) {
-                    Log.d("DELETE", "onDeleteButtonClick: test listner");
                     getFragmentManager().popBackStackImmediate();
                     viewModelDetails.deleteAlert(alert);
                 }
@@ -44,6 +40,15 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         public void onClick(Alert alert) {
         }
 
+        @Override
+        public void onAddClick() {
+        }
+
+        @Override
+        public void onSaveClick(Alert alert) {
+        }
+
+
     };
 
     /**
@@ -52,10 +57,8 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     public static AlertFragment forAlert(long alertID) {
         AlertFragment fragment = new AlertFragment();
         Bundle args = new Bundle();
-
         args.putLong(KEY_PROJECT_ID, alertID);
         fragment.setArguments(args);
-
         return fragment;
     }
 
