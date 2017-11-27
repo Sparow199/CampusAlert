@@ -75,19 +75,18 @@ public class AlertViewModel extends AndroidViewModel {
 
 
     public void getCurrentLocation(){
-        Log.e("location","je passe ici");
         LocationListener locationListener= new LocationListener(){
             @Override
             public void onLocationChanged(Location location) {
                 try {
                     List<Address> results = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-                    StringBuilder sb = new StringBuilder("");
-                    sb.append(location.getLatitude());
-                    sb.append(",");
-                    sb.append(location.getLongitude());
+                    StringBuilder strbu = new StringBuilder("");
+                    strbu.append(location.getLatitude());
+                    strbu.append(",");
+                    strbu.append(location.getLongitude());
                     latitude=location.getLatitude();
                     longitude=location.getLongitude();
-                    Log.e("location",sb.toString() );
+                    Log.e("location",strbu.toString() );
                     address=results.get(0).getAddressLine(0);
                     locationLiveData.postValue(location);
                 } catch (IOException e) {
@@ -118,8 +117,6 @@ public class AlertViewModel extends AndroidViewModel {
         return locationLiveData;
     }
 
-
-
     /**
      * A creator is used to inject the alert ID into the ViewModel
      */
@@ -148,9 +145,8 @@ public class AlertViewModel extends AndroidViewModel {
     public String getAddress() {
         return address;
     }
-    public double getLongitude() {
-        return longitude;
-    }
+
+    public double getLongitude() {return longitude;}
 
     public double getLatitude() {
         return latitude;

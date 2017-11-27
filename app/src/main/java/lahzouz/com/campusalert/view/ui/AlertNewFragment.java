@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -53,7 +55,7 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner {
                     if (alert.getAddress() != null) {
                         if (alert.getLatitude() != -2 && alert.getLongitude() != -2) {
                             viewModelDetails.insertAlert(alert);
-                            getFragmentManager().popBackStack();
+                            removeCurrentFragment();
                         } else {
                             Toast.makeText(getActivity(), "Erreur, données de localisation introuvables, latitude : " + alert.getLatitude() + " longitude : " + alert.getLongitude(), Toast.LENGTH_LONG).show();
                         }
@@ -98,10 +100,32 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner {
         super.onViewCreated(view, savedInstanceState);
         spinner_type = view.findViewById(R.id.alert_type_spinner);
         edit_address = view.findViewById(R.id.address);
+        setHasOptionsMenu(true);
 
 //        myWebView = view.findViewById(R.id.new_web_view);
 //        String mapPath = "https://maps.google.com/maps";
 //        myWebView.loadUrl(mapPath+"?q=43.0054446,-87.9678884&t=m&z=7");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // TODO Add your menu entries here
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.geolocation_menu, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_location:
+                viewModelDetails.getCurrentLocation();
+                Toast.makeText(getActivity(), "Localisation actualisée", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

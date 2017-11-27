@@ -39,7 +39,6 @@ public class LocationProvider {
             locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER,locationListener,null);
         }
 
-
     }
 
     private boolean checkFineLocationPermission(Context context) {
