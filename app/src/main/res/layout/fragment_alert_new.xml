@@ -26,6 +26,8 @@
         android:fitsSystemWindows="true"
         tools:context="lahzouz.com.campusalert.view.ui.AlertNewFragment">
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,6 +37,18 @@
             android:orientation="vertical"
             android:padding="5dp"
             android:paddingTop="@dimen/activity_vertical_margin">
+
+
+            <!--<com.google.android.gms.maps.MapView-->
+                <!--android:id="@+id/mapview"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="325dp" />-->
+
+            <!--<WebView-->
+                <!--android:id="@+id/new_web_view"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="325dp"-->
+                <!--android:layout_margin="8dp"/>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,19 +77,19 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/alert_adress"
+                    android:id="@+id/alert_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:labelFor="@id/adress"
-                    android:text="@string/adress" />
+                    android:labelFor="@id/address"
+                    android:text="@string/address" />
 
                 <EditText
-                    android:id="@+id/adress"
+                    android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:paddingBottom="5dp"
-                    android:text="@={alert.adress}" />
+                    android:text="@={alert.address}" />
 
             </LinearLayout>
 

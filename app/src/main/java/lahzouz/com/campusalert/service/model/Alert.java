@@ -20,8 +20,8 @@ public class Alert {
     private String type;
     @ColumnInfo(name = "alert_desc")
     private String description;
-    @ColumnInfo(name = "alert_adress")
-    private String adress;
+    @ColumnInfo(name = "alert_address")
+    private String address;
     @ColumnInfo(name = "alert_lati")
     private double latitude;
     @ColumnInfo(name = "alert_long")
@@ -36,14 +36,14 @@ public class Alert {
      ***************************************************************************************************/
     @Ignore
     public Alert() {
-//        longitude = -1;
-//        latitude = -2;
+        longitude = -2;
+        latitude = -2;
     }
 
-    public Alert(String type, String description, String adress, double latitude, double longitude, Date created_at) {
+    public Alert(String type, String description, String address, double latitude, double longitude, Date created_at) {
         this.type = type;
         this.description = description;
-        this.adress = adress;
+        this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
         this.created_at = created_at;
@@ -67,12 +67,12 @@ public class Alert {
         this.description = description;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public double getLatitude() {
@@ -108,7 +108,7 @@ public class Alert {
         return "Alert{" +
                 "type='" + type + '\'' +
                 ", description='" + description + '\'' +
-                ", adress='" + adress + '\'' +
+                ", address='" + address + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", created_at=" + created_at +
@@ -124,13 +124,13 @@ public class Alert {
 
         if (getType() != null ? !getType().equals(alert.getType()) : alert.getType() != null)
             return false;
-        return getAdress() != null ? getAdress().equals(alert.getAdress()) : alert.getAdress() == null;
+        return getAddress() != null ? getAddress().equals(alert.getAddress()) : alert.getAddress() == null;
     }
 
     @Override
     public int hashCode() {
         int result = getType() != null ? getType().hashCode() : 0;
-        result = 31 * result + (getAdress() != null ? getAdress().hashCode() : 0);
+        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
         return result;
     }
 }

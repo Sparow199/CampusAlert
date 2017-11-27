@@ -6,7 +6,6 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.OnLifecycleEvent;
-import android.util.Log;
 
 import java.util.List;
 
@@ -14,12 +13,12 @@ import lahzouz.com.campusalert.service.database.AppDatabase;
 import lahzouz.com.campusalert.service.model.Alert;
 
 import static lahzouz.com.campusalert.service.database.InitDatabase.initAlertList;
-import static lahzouz.com.campusalert.view.ui.AlertListFragment.TAG;
 
 public class AlertListViewModel extends AndroidViewModel implements LifecycleObserver {
 
     private LiveData<List<Alert>> alertListObservable;
     private AppDatabase appDatabase;
+
 
     public AlertListViewModel(Application application) {
         super(application);
@@ -32,7 +31,7 @@ public class AlertListViewModel extends AndroidViewModel implements LifecycleObs
         // uncomment to switch to local database mode
         alertListObservable = appDatabase.AlertModel().getAll();
         // uncomment to switch to Remote repository mode
-//        alertListObservable = AlertRepository.getInstance().getProjectList("Apolline-Lille");
+        // alertListObservable = AlertRepository.getInstance().getProjectList("Apolline-Lille");
     }
 
 
@@ -56,9 +55,9 @@ public class AlertListViewModel extends AndroidViewModel implements LifecycleObs
     }
 
 
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void create() {
-        Log.d(TAG, "create: ");
         deleteAllAlerts();
         insertAllAlerts(initAlertList());
     }

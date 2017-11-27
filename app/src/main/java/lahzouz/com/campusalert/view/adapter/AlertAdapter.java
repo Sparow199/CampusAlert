@@ -51,7 +51,7 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHol
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     Alert alert = alertList.get(newItemPosition);
                     Alert old = AlertAdapter.this.alertList.get(oldItemPosition);
-                    return alert.id == old.id && Objects.equals(alert.getAdress(), old.getAdress());
+                    return alert.id == old.id && Objects.equals(alert.getAddress(), old.getAddress());
                 }
             });
 
