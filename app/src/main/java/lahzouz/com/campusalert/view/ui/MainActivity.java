@@ -54,4 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void removeCurrentFragment(String className){
+        getSupportFragmentManager().popBackStack(className, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
 }

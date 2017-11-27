@@ -71,6 +71,15 @@
                 android:text="@{String.format(@string/alert_date, alert.getCreated_at())}"
                 android:textSize="@dimen/alert_text" />
 
+
+            <TextView
+                android:id="@+id/alert_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/alert_address"
+                android:text="@{String.format(@string/alert_long, alert.getAddress())}"
+                android:textSize="@dimen/alert_text" />
+
             <TextView
                 android:id="@+id/alert_long"
                 android:layout_width="match_parent"

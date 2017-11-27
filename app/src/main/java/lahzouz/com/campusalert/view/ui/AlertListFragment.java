@@ -71,7 +71,7 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
         super.onActivityCreated(savedInstanceState);
         viewModelList = ViewModelProviders.of(this).get(AlertListViewModel.class);
         observeViewModel(viewModelList);
-
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     private void observeViewModel(AlertListViewModel viewModel) {

@@ -4,13 +4,19 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import lahzouz.com.campusalert.R;
 import lahzouz.com.campusalert.databinding.FragmentAlertDetailsBinding;
@@ -23,14 +29,18 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     private static final String KEY_PROJECT_ID = "alert_id";
     private FragmentAlertDetailsBinding binding;
     private AlertViewModel viewModelDetails;
+    private static long alertGlobalId;
+    private static String className;
+    String baseUrl ="https://www.google.com/maps/search/?api=1&map_action=map";
+
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
 
         @Override
         public void onDeleteClick(Alert alert) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
                 if (alert != null) {
-                    getFragmentManager().popBackStack();
                     viewModelDetails.deleteAlert(alert);
+                    ((MainActivity)getActivity()).removeCurrentFragment(className);
                 }
 
             }
@@ -58,6 +68,8 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         AlertFragment fragment = new AlertFragment();
         Bundle args = new Bundle();
 
+        alertGlobalId=alertID;
+
         args.putLong(KEY_PROJECT_ID, alertID);
         fragment.setArguments(args);
 
@@ -74,6 +86,40 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
 
         // Create and set the adapter for the RecyclerView.
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        className = this.getClass().getName();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.maps_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                ((MainActivity)getActivity()).removeCurrentFragment(this.getClass().getName());
+                return true;
+            case R.id.action_maps:
+                Alert currentAlert = viewModelDetails.getAlert(alertGlobalId);
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(baseUrl+"&center="+currentAlert.getLongitude()+","+currentAlert.getLatitude()));
+                startActivity(browserIntent);
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
