@@ -57,7 +57,9 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner {
      * Creates alert fragment for specific alert ID
      */
     public static AlertNewFragment forNewAlert() {
+
         AlertNewFragment fragment = new AlertNewFragment();
+
         return fragment;
     }
 

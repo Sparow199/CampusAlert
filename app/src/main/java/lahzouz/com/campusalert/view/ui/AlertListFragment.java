@@ -28,7 +28,8 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
         @Override
         public void onClick(Alert alert) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                ((MainActivity) getActivity()).show(alert);
+                Fragment f = AlertFragment.forAlert(alert.getId());
+                ((MainActivity) getActivity()).show(f);
             }
         }
 
@@ -38,7 +39,7 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
 
         public void onAddClick() {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                ((MainActivity) getActivity()).addNew();
+                ((MainActivity) getActivity()).show(new AlertNewFragment());
             }
         }
 
@@ -47,6 +48,7 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
         }
 
     };
+
     private AlertAdapter alertAdapter;
     private FragmentAlertListBinding binding;
     private AlertListViewModel viewModelList;
@@ -84,4 +86,5 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
             }
         });
     }
+
 }

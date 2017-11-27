@@ -29,7 +29,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         public void onDeleteClick(Alert alert) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
                 if (alert != null) {
-                    getFragmentManager().popBackStackImmediate();
+                    getFragmentManager().popBackStack();
                     viewModelDetails.deleteAlert(alert);
                 }
 
@@ -48,19 +48,22 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         public void onSaveClick(Alert alert) {
         }
 
-
     };
 
     /**
      * Creates alert fragment for specific alert ID
      */
     public static AlertFragment forAlert(long alertID) {
+
         AlertFragment fragment = new AlertFragment();
         Bundle args = new Bundle();
+
         args.putLong(KEY_PROJECT_ID, alertID);
         fragment.setArguments(args);
+
         return fragment;
     }
+
 
     @Nullable
     @Override
@@ -83,6 +86,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                 .get(AlertViewModel.class);
 
         binding.setAlert(viewModelDetails.getAlert(getArguments().getLong(KEY_PROJECT_ID)));
+
         binding.setCallback(alertClickCallback);
         binding.setIsLoading(true);
 
