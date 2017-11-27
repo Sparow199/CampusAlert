@@ -32,8 +32,10 @@ public class AlertViewModel extends AndroidViewModel {
 
 
     private MutableLiveData<Location> locationLiveData = new MutableLiveData<>();
+
     private double longitude;
     private double latitude;
+
     private String address;
     private Geocoder geocoder;
 
@@ -79,16 +81,21 @@ public class AlertViewModel extends AndroidViewModel {
             @Override
             public void onLocationChanged(Location location) {
                 try {
-                    List<Address> results = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-                    StringBuilder strbu = new StringBuilder("");
-                    strbu.append(location.getLatitude());
-                    strbu.append(",");
-                    strbu.append(location.getLongitude());
+
                     latitude=location.getLatitude();
                     longitude=location.getLongitude();
+
+                    List<Address> results = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+                    StringBuilder strbu = new StringBuilder("");
+
+                    strbu.append(latitude);
+                    strbu.append(",");
+                    strbu.append(longitude);
                     Log.e("location",strbu.toString() );
+
                     address=results.get(0).getAddressLine(0);
-                    locationLiveData.postValue(location);
+                    locationLiveData.setValue(location);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

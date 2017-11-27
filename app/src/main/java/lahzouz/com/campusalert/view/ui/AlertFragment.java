@@ -31,7 +31,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     private AlertViewModel viewModelDetails;
     private static long alertGlobalId;
     private static String className;
-    String baseUrl ="https://www.google.com/maps/search/?api=1&map_action=map";
+    String baseUrl ="https://www.google.com/maps/search/?api=1";
 
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
 
@@ -110,10 +110,14 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                 ((MainActivity)getActivity()).removeCurrentFragment(this.getClass().getName());
                 return true;
             case R.id.action_maps:
+
                 Alert currentAlert = viewModelDetails.getAlert(alertGlobalId);
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse(baseUrl+"&center="+currentAlert.getLongitude()+","+currentAlert.getLatitude()));
-                startActivity(browserIntent);
+
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(baseUrl+"&query="+currentAlert.getLatitude()+","+currentAlert.getLongitude()));
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+                startActivity(mapIntent);
                 return true;
 
 
