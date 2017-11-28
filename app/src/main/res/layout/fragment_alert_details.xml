@@ -117,6 +117,7 @@
             android:src="@android:drawable/ic_delete"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorAccent"
+            app:elevation="100dp"
             app:fabSize="normal" />
 
     </android.support.design.widget.CoordinatorLayout>

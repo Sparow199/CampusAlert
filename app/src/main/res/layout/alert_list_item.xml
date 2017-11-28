@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/type"
                 android:text="@{alert.getType()}"
-                android:textSize="@dimen/alert_text"
+                android:textSize="@dimen/alert_header2"
                 android:textStyle="bold" />
 
             <TextView
