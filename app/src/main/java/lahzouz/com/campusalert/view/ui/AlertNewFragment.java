@@ -5,10 +5,13 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -104,9 +107,7 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         setHasOptionsMenu(true);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         className = this.getClass().getName();
-
-        EasyPermissions.requestPermissions(this, "Need fine location Permission", FINE_LOCATION_PERMISSION,
-                Manifest.permission.ACCESS_FINE_LOCATION);
+        checkLocationPermission(getContext());
     }
 
     @Override
@@ -174,6 +175,17 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
     }
 
 
+
+
+    private void checkLocationPermission(Context context) {
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            EasyPermissions.requestPermissions(this, "Need fine location Permission", FINE_LOCATION_PERMISSION,
+                    Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+
+    }
         @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
