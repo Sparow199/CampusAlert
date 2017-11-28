@@ -33,11 +33,14 @@
             android:textAlignment="center"
             app:visibleGone="@{isLoading}"/>
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/item_horizontal_margin"
             android:layout_marginStart="@dimen/item_horizontal_margin"
+            android:layout_marginTop="?attr/actionBarSize"
             android:gravity="center_vertical|center_horizontal"
             android:orientation="vertical"
             android:padding="5dp"
@@ -106,6 +109,9 @@
 
         </LinearLayout>
 
+
+
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floating_action_button"
             android:layout_width="wrap_content"
@@ -117,7 +123,7 @@
             android:src="@android:drawable/ic_delete"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorAccent"
-            app:elevation="100dp"
+            app:elevation="10dp"
             app:fabSize="normal" />
 
     </android.support.design.widget.CoordinatorLayout>
