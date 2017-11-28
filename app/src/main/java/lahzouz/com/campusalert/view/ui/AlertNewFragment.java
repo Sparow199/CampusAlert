@@ -1,10 +1,10 @@
 package lahzouz.com.campusalert.view.ui;
 
+import android.Manifest;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.DataBindingUtil;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,16 +21,19 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.Date;
+import java.util.List;
 
 import lahzouz.com.campusalert.R;
 import lahzouz.com.campusalert.databinding.FragmentAlertNewBinding;
 import lahzouz.com.campusalert.service.model.Alert;
 import lahzouz.com.campusalert.view.callback.AlertClickCallback;
 import lahzouz.com.campusalert.viewmodel.AlertViewModel;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.databinding.DataBindingUtil.*;
 
 
-
-public class AlertNewFragment extends Fragment implements LifecycleOwner {
+public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPermissions.PermissionCallbacks {
 
     private FragmentAlertNewBinding binding;
     private Spinner spinner_type;
@@ -38,6 +41,7 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner {
     private Alert alertGlobal = new Alert();
     private EditText edit_address;
     private static String className;
+    private static final int FINE_LOCATION_PERMISSION = 0;
 
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
 
@@ -85,7 +89,7 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate this data binding layout
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alert_new, container, false);
+        binding = inflate(inflater, R.layout.fragment_alert_new, container, false);
 
         // Create and set the adapter for the RecyclerView.
         return binding.getRoot();
@@ -100,6 +104,9 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner {
         setHasOptionsMenu(true);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         className = this.getClass().getName();
+
+        EasyPermissions.requestPermissions(this, "Need fine location Permission", FINE_LOCATION_PERMISSION,
+                Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
     @Override
@@ -139,6 +146,8 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner {
         binding.setCallback(alertClickCallback);
 
 
+
+
         spinner_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -162,8 +171,23 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner {
             }
         });
 
+    }
 
 
+        @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> list) {
+        Toast.makeText(getActivity(), "Permission accordée", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> list) {
+        Toast.makeText(getActivity(), "Permission refusée, impossible d'ajouter une alerte", Toast.LENGTH_LONG).show();
     }
 
 

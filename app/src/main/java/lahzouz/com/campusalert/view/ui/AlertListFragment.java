@@ -21,6 +21,8 @@ import lahzouz.com.campusalert.view.adapter.AlertAdapter;
 import lahzouz.com.campusalert.view.callback.AlertClickCallback;
 import lahzouz.com.campusalert.viewmodel.AlertListViewModel;
 
+import static android.databinding.DataBindingUtil.*;
+
 
 public class AlertListFragment extends Fragment implements LifecycleOwner {
     public static final String TAG = "AlertListFragment";
@@ -57,7 +59,7 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alert_list, container, false);
+        binding = inflate(inflater, R.layout.fragment_alert_list, container, false);
 
         alertAdapter = new AlertAdapter(alertClickCallback);
         binding.alertList.setAdapter(alertAdapter);

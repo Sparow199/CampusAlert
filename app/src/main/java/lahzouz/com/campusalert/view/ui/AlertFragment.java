@@ -1,5 +1,6 @@
 package lahzouz.com.campusalert.view.ui;
 
+import android.Manifest;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
@@ -23,6 +24,9 @@ import lahzouz.com.campusalert.databinding.FragmentAlertDetailsBinding;
 import lahzouz.com.campusalert.service.model.Alert;
 import lahzouz.com.campusalert.view.callback.AlertClickCallback;
 import lahzouz.com.campusalert.viewmodel.AlertViewModel;
+import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.databinding.DataBindingUtil.*;
 
 
 public class AlertFragment extends Fragment implements LifecycleOwner{
@@ -82,7 +86,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate this data binding layout
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alert_details, container, false);
+        binding = inflate(inflater, R.layout.fragment_alert_details, container, false);
 
         // Create and set the adapter for the RecyclerView.
         return binding.getRoot();
@@ -141,7 +145,6 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         binding.setIsLoading(true);
 
         observeViewModel(viewModelDetails);
-
 
     }
 
