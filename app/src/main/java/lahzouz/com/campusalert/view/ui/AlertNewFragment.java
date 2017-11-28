@@ -46,46 +46,6 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
     private static String className;
     private static final int FINE_LOCATION_PERMISSION = 0;
 
-    private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
-
-        @Override
-        public void onSaveClick(Alert alert) {
-                alert.setType(alertGlobal.getType());
-                alert.setCreated_at(new Date());
-                alert.setLongitude(alertGlobal.getLongitude());
-                alert.setLatitude(alertGlobal.getLatitude());
-
-                if (alert.getType() != null) {
-                    if (alert.getAddress() != null) {
-                        if (alert.getLatitude() != -2 && alert.getLongitude() != -2) {
-                            viewModelDetails.insertAlert(alert);
-                            ((MainActivity)getActivity()).removeCurrentFragment(className);
-                        } else {
-                            Toast.makeText(getActivity(), "Erreur, données de localisation introuvables, latitude : " + alert.getLatitude() + " longitude : " + alert.getLongitude(), Toast.LENGTH_LONG).show();
-                        }
-                    } else {
-                        Toast.makeText(getActivity(), "Erreur, veuillez indiquer une addresse", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Erreur,veuillez indiquer un type", Toast.LENGTH_LONG).show();
-                }
-            }
-
-
-        @Override
-        public void onDeleteClick(Alert alert) {
-        }
-
-        @Override
-        public void onClick(Alert alert) {
-        }
-
-        @Override
-        public void onAddClick() {
-        }
-
-    };
-
 
     @Nullable
     @Override
@@ -97,7 +57,6 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         // Create and set the adapter for the RecyclerView.
         return binding.getRoot();
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -132,22 +91,16 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         }
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         AlertViewModel.Factory factory = new AlertViewModel.Factory(
                 getActivity().getApplication(), 0);
-
         viewModelDetails = ViewModelProviders.of(this, factory).get(AlertViewModel.class);
         viewModelDetails.getCurrentLocation();
-        
         binding.setAlert(new Alert());
         binding.setCallback(alertClickCallback);
-
-
-
 
         spinner_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -161,7 +114,6 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
             }
         });
 
-
         LiveData<Location> locationLiveData = viewModelDetails.getLocationLiveData();
         locationLiveData.observe(this, new Observer<Location>() {
             @Override
@@ -174,7 +126,45 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
 
     }
 
+    private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
 
+        @Override
+        public void onSaveClick(Alert alert) {
+            alert.setType(alertGlobal.getType());
+            alert.setCreated_at(new Date());
+            alert.setLongitude(alertGlobal.getLongitude());
+            alert.setLatitude(alertGlobal.getLatitude());
+
+            if (alert.getType() != null) {
+                if (alert.getAddress() != null) {
+                    if (alert.getLatitude() != -2 && alert.getLongitude() != -2) {
+                        viewModelDetails.insertAlert(alert);
+                        ((MainActivity)getActivity()).removeCurrentFragment(className);
+                    } else {
+                        Toast.makeText(getActivity(), "Erreur, données de localisation introuvables, latitude : " + alert.getLatitude() + " longitude : " + alert.getLongitude(), Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Erreur, veuillez indiquer une addresse", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "Erreur,veuillez indiquer un type", Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+        @Override
+        public void onDeleteClick(Alert alert) {
+        }
+
+        @Override
+        public void onClick(Alert alert) {
+        }
+
+        @Override
+        public void onAddClick() {
+        }
+
+    };
 
 
     private void checkLocationPermission(Context context) {

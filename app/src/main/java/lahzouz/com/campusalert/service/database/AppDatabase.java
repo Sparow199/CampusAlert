@@ -8,9 +8,6 @@ import android.content.Context;
 
 import lahzouz.com.campusalert.service.model.Alert;
 
-/**
- * Created by sparow on 10/31/17.
- */
 
 @Database(entities = {Alert.class}, version = 1, exportSchema = false)
 @TypeConverters(Converters.class)

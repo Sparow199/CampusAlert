@@ -31,9 +31,6 @@ public class Alert {
     private Date created_at;
 
 
-    /***************************************************************************************************
-     * Generated
-     ***************************************************************************************************/
     @Ignore
     public Alert() {
         longitude = -2;
@@ -124,12 +121,15 @@ public class Alert {
 
         if (getType() != null ? !getType().equals(alert.getType()) : alert.getType() != null)
             return false;
+        if (getDescription() != null ? !getDescription().equals(alert.getDescription()) : alert.getDescription() != null)
+            return false;
         return getAddress() != null ? getAddress().equals(alert.getAddress()) : alert.getAddress() == null;
     }
 
     @Override
     public int hashCode() {
         int result = getType() != null ? getType().hashCode() : 0;
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
         return result;
     }

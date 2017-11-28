@@ -15,6 +15,7 @@ import lahzouz.com.campusalert.databinding.AlertListItemBinding;
 import lahzouz.com.campusalert.service.model.Alert;
 import lahzouz.com.campusalert.view.callback.AlertClickCallback;
 
+
 public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHolder> {
 
     @Nullable
@@ -54,7 +55,6 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.AlertViewHol
                     return alert.id == old.id && Objects.equals(alert.getAddress(), old.getAddress());
                 }
             });
-
 
             this.alertList = alertList;
             result.dispatchUpdatesTo(this);

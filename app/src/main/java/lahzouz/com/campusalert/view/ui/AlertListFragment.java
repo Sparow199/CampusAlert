@@ -4,7 +4,6 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +24,9 @@ import static android.databinding.DataBindingUtil.*;
 
 
 public class AlertListFragment extends Fragment implements LifecycleOwner {
+
     public static final String TAG = "AlertListFragment";
+
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
         @Override
         public void onClick(Alert alert) {
@@ -60,7 +61,6 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = inflate(inflater, R.layout.fragment_alert_list, container, false);
-
         alertAdapter = new AlertAdapter(alertClickCallback);
         binding.alertList.setAdapter(alertAdapter);
         binding.setCallback(alertClickCallback);

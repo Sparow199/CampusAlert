@@ -12,9 +12,6 @@ import lahzouz.com.campusalert.service.model.Alert;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
-/**
- * Created by sparow on 10/31/17.
- */
 
 @Dao
 public interface AlertDao {

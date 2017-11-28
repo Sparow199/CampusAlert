@@ -1,8 +1,5 @@
 package lahzouz.com.campusalert.service.localisation;
 
-/**
- * Created by aoudia on 27/11/17.
- */
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -11,8 +8,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-
 import static android.content.Context.LOCATION_SERVICE;
+
 
 public class LocationProvider {
 

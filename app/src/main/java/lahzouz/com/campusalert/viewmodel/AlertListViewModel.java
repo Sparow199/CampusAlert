@@ -14,32 +14,16 @@ import lahzouz.com.campusalert.service.model.Alert;
 
 import static lahzouz.com.campusalert.service.database.InitDatabase.initAlertList;
 
+
 public class AlertListViewModel extends AndroidViewModel implements LifecycleObserver {
 
     private LiveData<List<Alert>> alertListObservable;
     private AppDatabase appDatabase;
 
-
     public AlertListViewModel(Application application) {
         super(application);
-        // If any transformation is needed, this can be simply done by Transformations class ...
         appDatabase = AppDatabase.getAppDatabase(this.getApplication());
-        // appDatabase.AlertModel().insertAll(alerts);
-        // appDatabase.AlertModel().deleteAll();
-        // Log.d("TEST", "AlertListViewModel: " + appDatabase.AlertModel().deleteAll());
-        // appDatabase.AlertModel().insertAll(initAlertList());
-        // uncomment to switch to local database mode
         alertListObservable = appDatabase.AlertModel().getAll();
-        // uncomment to switch to Remote repository mode
-        // alertListObservable = AlertRepository.getInstance().getProjectList("Apolline-Lille");
-    }
-
-
-    /**
-     * Expose the LiveData Projects query so the UI can observe it.
-     */
-    public LiveData<List<Alert>> getProjectListObservable() {
-        return alertListObservable;
     }
 
     public void insertAllAlerts(List<Alert> list) {
@@ -55,11 +39,17 @@ public class AlertListViewModel extends AndroidViewModel implements LifecycleObs
     }
 
 
-
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void create() {
         deleteAllAlerts();
         insertAllAlerts(initAlertList());
+    }
+
+    /**
+     * Expose the LiveData Projects query so the UI can observe it.
+     */
+    public LiveData<List<Alert>> getProjectListObservable() {
+        return alertListObservable;
     }
 
 }

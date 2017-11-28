@@ -29,13 +29,9 @@ public class AlertViewModel extends AndroidViewModel {
     private final long alertId;
     public ObservableField<Alert> alert = new ObservableField<>();
     private AppDatabase appDatabase;
-
-
     private MutableLiveData<Location> locationLiveData = new MutableLiveData<>();
-
     private double longitude;
     private double latitude;
-
     private String address;
     private Geocoder geocoder;
 
@@ -44,37 +40,9 @@ public class AlertViewModel extends AndroidViewModel {
         super(application);
         this.alertId = alertId;
         appDatabase = AppDatabase.getAppDatabase(application.getApplicationContext());
-
-        // uncomment to switch to Database mode
         alertObservable = appDatabase.AlertModel().findOneAlert(alertId);
-        // uncomment to switch to Remote repository mode
-//        alertObservable = AlertRepository.getInstance().getProjectDetails("Apolline-Lille", alertId);
         this.geocoder = new Geocoder(application, Locale.getDefault());
-
     }
-
-    public LiveData<Alert> getObservableProject() {
-        return alertObservable;
-    }
-
-
-    public void setAlert(Alert alert) {
-        this.alert.set(alert);
-    }
-
-
-    public void deleteAlert(Alert alert) {
-        appDatabase.AlertModel().delete(alert);
-    }
-
-    public void insertAlert(Alert alert) {
-        appDatabase.AlertModel().insertOne(alert);
-    }
-
-    public Alert getAlert(long alertId) {
-        return appDatabase.AlertModel().getAlert(alertId);
-    }
-
 
     public void getCurrentLocation(){
         LocationListener locationListener= new LocationListener(){
@@ -120,6 +88,36 @@ public class AlertViewModel extends AndroidViewModel {
         locationProvider.locationUpdate(this.getApplication(),locationListener);
     }
 
+    public void setAlert(Alert alert) {
+        this.alert.set(alert);
+    }
+
+    public void deleteAlert(Alert alert) {
+        appDatabase.AlertModel().delete(alert);
+    }
+
+    public void insertAlert(Alert alert) {
+        appDatabase.AlertModel().insertOne(alert);
+    }
+
+    public Alert getAlert(long alertId) {
+        return appDatabase.AlertModel().getAlert(alertId);
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public double getLongitude() {return longitude;}
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public LiveData<Alert> getObservableProject() {
+        return alertObservable;
+    }
+
     public LiveData<Location> getLocationLiveData() {
         return locationLiveData;
     }
@@ -131,9 +129,7 @@ public class AlertViewModel extends AndroidViewModel {
 
         @NonNull
         private final Application application;
-
         private final long alertId;
-
         public Factory(@NonNull Application application, long alertId) {
             this.application = application;
             this.alertId = alertId;
@@ -144,18 +140,8 @@ public class AlertViewModel extends AndroidViewModel {
             //noinspection unchecked
             return (T) new AlertViewModel(application, alertId);
         }
-
-
     }
 
 
-    public String getAddress() {
-        return address;
-    }
 
-    public double getLongitude() {return longitude;}
-
-    public double getLatitude() {
-        return latitude;
-    }
 }

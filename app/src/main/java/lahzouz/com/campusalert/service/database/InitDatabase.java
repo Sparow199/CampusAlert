@@ -6,9 +6,6 @@ import java.util.List;
 
 import lahzouz.com.campusalert.service.model.Alert;
 
-/**
- * Created by sparow on 11/26/17.
- */
 
 public class InitDatabase {
 
