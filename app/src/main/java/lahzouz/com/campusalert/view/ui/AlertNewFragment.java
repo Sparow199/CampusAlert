@@ -135,13 +135,13 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
             alert.setLongitude(alertGlobal.getLongitude());
             alert.setLatitude(alertGlobal.getLatitude());
 
-            if (alert.getType() != null) {
-                if (alert.getAddress() != null) {
+            if (alert.getType() != null && !alert.getType().equals("")) {
+                if (alert.getAddress() != null && !alert.getAddress().equals("")) {
                     if (alert.getLatitude() != -2 && alert.getLongitude() != -2) {
                         viewModelDetails.insertAlert(alert);
                         ((MainActivity)getActivity()).removeCurrentFragment(className);
                     } else {
-                        Toast.makeText(getActivity(), "Erreur, données de localisation introuvables, latitude : " + alert.getLatitude() + " longitude : " + alert.getLongitude(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Erreur, données de localisation introuvables", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getActivity(), "Erreur, veuillez indiquer une addresse", Toast.LENGTH_LONG).show();

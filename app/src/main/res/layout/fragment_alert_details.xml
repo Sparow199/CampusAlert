@@ -80,14 +80,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/alert_address"
-                android:text="@{String.format(@string/alert_long, alert.getAddress())}"
+                android:text="@{String.format(@string/alert_address, alert.getAddress())}"
                 android:textSize="@dimen/alert_text" />
 
             <TextView
                 android:id="@+id/alert_long"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/alert_lati"
+                android:contentDescription="@string/alert_long"
                 android:text="@{String.format(@string/alert_long, alert.getLongitude())}"
                 android:textSize="@dimen/alert_text" />
 
