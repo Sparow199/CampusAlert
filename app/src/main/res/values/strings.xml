@@ -14,14 +14,18 @@
     <string name="date">Date</string>
     <string name="alert_date">Crée le: %s</string>
 
-    <string name="address">adresse</string>
-    <string name="alert_address">adresse: %s</string>
+    <string name="address">Adresse</string>
+    <string name="alert_address">Adresse: %s</string>
 
+    <string name="longitude">Longitude</string>
     <string name="alert_long">Longitude: %s</string>
 
+    <string name="latitude">Latitute</string>
     <string name="alert_lati">Latitute: %s</string>
 
     <string name="description">Description</string>
+
+    <string name="alert_desc">Description: %s </string>
 
 
 

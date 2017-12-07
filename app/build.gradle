@@ -32,7 +32,7 @@ android {
 
 // Versions
 project.ext {
-    appcompat = "27.0.1"
+    appcompat = "27.0.2"
     rc = "1.0.0"
     rcLife = "1.0.0"
     retrofit = "2.3.0"

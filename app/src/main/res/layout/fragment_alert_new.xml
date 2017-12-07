@@ -40,76 +40,74 @@
             android:padding="5dp"
             android:paddingTop="@dimen/activity_vertical_margin">
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/logo_width"
+                android:layout_height="@dimen/logo_height"
+                android:contentDescription="@string/alert_logo"
+                android:src="@drawable/logo" />
 
-            <!--<com.google.android.gms.maps.MapView-->
-                <!--android:id="@+id/mapview"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="325dp" />-->
-
-            <!--<WebView-->
-                <!--android:id="@+id/new_web_view"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="325dp"-->
-                <!--android:layout_margin="8dp"/>-->
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:id="@+id/linear_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/alert_type_label"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:labelFor="@id/alert_type_spinner"
                     android:text="@string/type" />
 
                 <Spinner
                     android:id="@+id/alert_type_spinner"
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/alert_type_array"
                     android:prompt="@string/types" />
+
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/address_hint"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/alert_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@id/address"
-                    android:text="@string/address" />
+                android:layout_marginTop="10dp">
 
                 <EditText
                     android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:paddingBottom="5dp"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:ems="10"
+                    android:hint="@string/address"
                     android:text="@={alert.address}" />
+            </android.support.design.widget.TextInputLayout>
 
-            </LinearLayout>
 
-            <TextView
+            <android.support.design.widget.TextInputLayout
                 android:id="@+id/alert_desc"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/description"
-                android:visibility="visible" />
+                android:layout_marginTop="10dp">
 
             <EditText
                 android:id="@+id/desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:lines="3"
-                android:maxLines="5"
+                android:lines="2"
+                android:maxLines="3"
+                android:hint="@string/description"
                 android:text="@={alert.description}" />
+
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 

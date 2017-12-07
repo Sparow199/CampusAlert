@@ -103,9 +103,9 @@
                 android:id="@+id/alert_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/description"
-                android:text="@{alert.getDescription()}"
-                android:textSize="@dimen/alert_header2" />
+                android:contentDescription="@string/alert_desc"
+                android:text="@{String.format(@string/alert_desc, alert.getDescription())}"
+                android:textSize="@dimen/alert_text"  />
 
         </LinearLayout>
 
