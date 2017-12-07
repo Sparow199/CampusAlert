@@ -20,12 +20,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // Add alert list fragment if this is first creation
         if (savedInstanceState == null) {
             AlertListFragment fragment = new AlertListFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, fragment, AlertListFragment.TAG).commit();
         }
+
         viewModelList = ViewModelProviders.of(this).get(AlertListViewModel.class);
         this.getLifecycle().addObserver(viewModelList);
     }

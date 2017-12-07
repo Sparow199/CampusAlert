@@ -33,19 +33,59 @@ import lahzouz.com.campusalert.view.callback.AlertClickCallback;
 import lahzouz.com.campusalert.viewmodel.AlertViewModel;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static android.databinding.DataBindingUtil.*;
+import static android.databinding.DataBindingUtil.inflate;
 
 
 public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPermissions.PermissionCallbacks {
 
+    private static final int FINE_LOCATION_PERMISSION = 0;
+    private static String className;
     private FragmentAlertNewBinding binding;
     private Spinner spinner_type;
     private AlertViewModel viewModelDetails;
     private Alert alertGlobal = new Alert();
-    private EditText edit_address;
-    private static String className;
-    private static final int FINE_LOCATION_PERMISSION = 0;
+    private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
 
+        @Override
+        public void onSaveClick(Alert alert) {
+            alert.setType(alertGlobal.getType());
+            alert.setCreated_at(new Date());
+            alert.setLongitude(alertGlobal.getLongitude());
+            alert.setLatitude(alertGlobal.getLatitude());
+
+            if (alert.getType() != null && !alert.getType().equals("")) {
+                if (alert.getLatitude() != -2 && alert.getLongitude() != -2) {
+                    if (alert.getAddress() != null && !alert.getAddress().equals("")) {
+                        viewModelDetails.insertAlert(alert);
+                        ((MainActivity) getActivity()).removeCurrentFragment(className);
+                    } else {
+                        Toast.makeText(getActivity(), "Erreur, veuillez indiquer une addresse", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+
+                    Toast.makeText(getActivity(), "Erreur, données de localisation introuvables", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "Erreur,veuillez indiquer un type", Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+        @Override
+        public void onDeleteClick(Alert alert) {
+        }
+
+        @Override
+        public void onClick(Alert alert) {
+        }
+
+        @Override
+        public void onAddClick() {
+        }
+
+    };
+    private EditText edit_address;
+    private EditText edit_desc;
 
     @Nullable
     @Override
@@ -61,8 +101,11 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         spinner_type = view.findViewById(R.id.alert_type_spinner);
         edit_address = view.findViewById(R.id.address);
+        edit_desc = view.findViewById(R.id.desc);
+
         setHasOptionsMenu(true);
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         className = this.getClass().getName();
@@ -128,49 +171,8 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
             }
         });
 
+
     }
-
-    private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
-
-        @Override
-        public void onSaveClick(Alert alert) {
-            alert.setType(alertGlobal.getType());
-            alert.setCreated_at(new Date());
-            alert.setLongitude(alertGlobal.getLongitude());
-            alert.setLatitude(alertGlobal.getLatitude());
-
-            if (alert.getType() != null && !alert.getType().equals("")) {
-                if (alert.getLatitude() != -2 && alert.getLongitude() != -2) {
-                if (alert.getAddress() != null && !alert.getAddress().equals("")) {
-                        viewModelDetails.insertAlert(alert);
-                        ((MainActivity)getActivity()).removeCurrentFragment(className);
-                    } else {
-                    Toast.makeText(getActivity(), "Erreur, veuillez indiquer une addresse", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-
-                    Toast.makeText(getActivity(), "Erreur, données de localisation introuvables", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                Toast.makeText(getActivity(), "Erreur,veuillez indiquer un type", Toast.LENGTH_LONG).show();
-            }
-        }
-
-
-        @Override
-        public void onDeleteClick(Alert alert) {
-        }
-
-        @Override
-        public void onClick(Alert alert) {
-        }
-
-        @Override
-        public void onAddClick() {
-        }
-
-    };
-
 
     private void checkLocationPermission(Context context) {
 
@@ -181,7 +183,8 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         }
 
     }
-        @Override
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
@@ -196,8 +199,6 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
     public void onPermissionsDenied(int requestCode, List<String> list) {
         Toast.makeText(getActivity(), "Permission refusée, impossible d'ajouter une alerte", Toast.LENGTH_LONG).show();
     }
-
-
 
 
 }

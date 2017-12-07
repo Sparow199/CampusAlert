@@ -63,7 +63,7 @@ public class AlertViewModel extends AndroidViewModel {
                     Log.e("location",strbu.toString() );
 
                     address=results.get(0).getAddressLine(0);
-                    locationLiveData.setValue(location);
+                    locationLiveData.postValue(location);
 
                 } catch (IOException e) {
                     e.printStackTrace();

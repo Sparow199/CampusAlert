@@ -44,15 +44,16 @@
                 android:id="@+id/imageView"
                 android:layout_width="@dimen/logo_width"
                 android:layout_height="@dimen/logo_height"
+                android:layout_marginTop="10dp"
                 android:contentDescription="@string/alert_logo"
                 android:src="@drawable/logo" />
 
 
             <LinearLayout
-                android:orientation="vertical"
                 android:id="@+id/linear_layout"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/alert_type_label"
@@ -78,33 +79,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
-                <EditText
+                <android.support.design.widget.TextInputEditText
                     android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:lines="1"
-                    android:maxLines="1"
                     android:ems="10"
                     android:hint="@string/address"
+                    android:inputType="textNoSuggestions"
                     android:text="@={alert.address}" />
             </android.support.design.widget.TextInputLayout>
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/alert_desc"
+                android:id="@+id/desc_hint"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
-            <EditText
+                <android.support.design.widget.TextInputEditText
                 android:id="@+id/desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                    android:hint="@string/description"
                 android:inputType="textMultiLine"
                 android:lines="2"
                 android:maxLines="3"
-                android:hint="@string/description"
                 android:text="@={alert.description}" />
 
             </android.support.design.widget.TextInputLayout>
