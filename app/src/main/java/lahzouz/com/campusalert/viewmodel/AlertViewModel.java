@@ -6,6 +6,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
+import android.content.Context;
 import android.databinding.ObservableField;
 import android.location.Address;
 import android.location.Geocoder;
@@ -112,6 +113,12 @@ public class AlertViewModel extends AndroidViewModel {
 
     public double getLatitude() {
         return latitude;
+    }
+
+
+    public boolean checkLocationEnabled(Context context) {
+        LocationProvider locationProvider = new LocationProvider();
+        return locationProvider.canGetLocation(context);
     }
 
     public LiveData<Alert> getObservableProject() {

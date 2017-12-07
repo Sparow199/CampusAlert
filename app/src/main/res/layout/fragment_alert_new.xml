@@ -120,7 +120,7 @@
             android:layout_margin="16dp"
             android:adjustViewBounds="false"
             android:onClick="@{() -> callback.onSaveClick(alert)}"
-            android:src="@android:drawable/ic_menu_upload"
+            android:src="@drawable/ic_file_upload_white_48dp"
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorPrimary"
             app:elevation="10dp"

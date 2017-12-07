@@ -83,8 +83,12 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
                 ((MainActivity)getActivity()).removeCurrentFragment(className);
                 return true;
             case R.id.action_location:
-                viewModelDetails.getCurrentLocation();
-                Toast.makeText(getActivity(), "Localisation actualisée", Toast.LENGTH_SHORT).show();
+                if(viewModelDetails.checkLocationEnabled(this.getContext())){
+                    viewModelDetails.getCurrentLocation();
+                    Toast.makeText(getActivity(), "Localisation actualisée avec succèe", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(), "Veuillez activer votre GPS s'ils vous plait", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -136,15 +140,16 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
             alert.setLatitude(alertGlobal.getLatitude());
 
             if (alert.getType() != null && !alert.getType().equals("")) {
+                if (alert.getLatitude() != -2 && alert.getLongitude() != -2) {
                 if (alert.getAddress() != null && !alert.getAddress().equals("")) {
-                    if (alert.getLatitude() != -2 && alert.getLongitude() != -2) {
                         viewModelDetails.insertAlert(alert);
                         ((MainActivity)getActivity()).removeCurrentFragment(className);
                     } else {
-                        Toast.makeText(getActivity(), "Erreur, données de localisation introuvables", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Erreur, veuillez indiquer une addresse", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Erreur, veuillez indiquer une addresse", Toast.LENGTH_LONG).show();
+
+                    Toast.makeText(getActivity(), "Erreur, données de localisation introuvables", Toast.LENGTH_LONG).show();
                 }
             } else {
                 Toast.makeText(getActivity(), "Erreur,veuillez indiquer un type", Toast.LENGTH_LONG).show();

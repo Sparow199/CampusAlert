@@ -3,7 +3,7 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/action_location"
-        android:icon="@android:drawable/ic_menu_mylocation"
+        android:icon="@drawable/ic_gps_fixed_white_48dp"
         android:title="@string/app_name"
         android:background="@color/cardview_light_background"
         app:showAsAction="ifRoom"/>
