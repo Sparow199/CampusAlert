@@ -1,11 +1,14 @@
 package lahzouz.com.campusalert.view.ui;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,18 +27,79 @@ import lahzouz.com.campusalert.service.model.Alert;
 import lahzouz.com.campusalert.view.callback.AlertClickCallback;
 import lahzouz.com.campusalert.viewmodel.AlertViewModel;
 
-
-import static android.databinding.DataBindingUtil.*;
+import static android.databinding.DataBindingUtil.inflate;
 
 
 public class AlertFragment extends Fragment implements LifecycleOwner{
 
     private static final String KEY_PROJECT_ID = "alert_id";
-    private FragmentAlertDetailsBinding binding;
-    private AlertViewModel viewModelDetails;
     private static long alertGlobalId;
     private static String className;
     String baseUrl ="https://www.google.com/maps/search/?api=1";
+    private FragmentAlertDetailsBinding binding;
+    private AlertViewModel viewModelDetails;
+    private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
+
+        @Override
+        public void onDeleteClick(final Alert alert) {
+            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+                if (alert != null) {
+
+                    AlertDialog.Builder builder;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_DeviceDefault_Dialog);
+                    } else {
+                        builder = new AlertDialog.Builder(getContext());
+                    }
+                    builder.setTitle("Supprimer alerte")
+                            .setMessage("Êtes-vous sûr de vouloir supprimer l'alerte ?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    viewModelDetails.deleteAlert(alert);
+                                    ((MainActivity) getActivity()).removeCurrentFragment(className);
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .setIcon(R.drawable.ic_warning_white_48dp)
+                            .show();
+
+                }
+
+            }
+        }
+
+        @Override
+        public void onClick(Alert alert) {
+        }
+
+        @Override
+        public void onAddClick() {
+        }
+
+        @Override
+        public void onSaveClick(Alert alert) {
+        }
+
+    };
+
+    /**
+     * Creates alert fragment for specific alert ID
+     */
+    public static AlertFragment forAlert(long alertID) {
+
+        AlertFragment fragment = new AlertFragment();
+        Bundle args = new Bundle();
+        alertGlobalId = alertID;
+        args.putLong(KEY_PROJECT_ID, alertID);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -123,49 +187,6 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                 }
             }
         });
-    }
-
-
-
-    private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
-
-        @Override
-        public void onDeleteClick(Alert alert) {
-            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                if (alert != null) {
-                    viewModelDetails.deleteAlert(alert);
-                    ((MainActivity)getActivity()).removeCurrentFragment(className);
-                }
-
-            }
-        }
-
-        @Override
-        public void onClick(Alert alert) {
-        }
-
-        @Override
-        public void onAddClick() {
-        }
-
-        @Override
-        public void onSaveClick(Alert alert) {
-        }
-
-    };
-
-    /**
-     * Creates alert fragment for specific alert ID
-     */
-    public static AlertFragment forAlert(long alertID) {
-
-        AlertFragment fragment = new AlertFragment();
-        Bundle args = new Bundle();
-        alertGlobalId=alertID;
-        args.putLong(KEY_PROJECT_ID, alertID);
-        fragment.setArguments(args);
-
-        return fragment;
     }
 
 
