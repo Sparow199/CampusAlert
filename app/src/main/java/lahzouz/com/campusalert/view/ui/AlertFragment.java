@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.concurrent.ExecutionException;
+
 import lahzouz.com.campusalert.R;
 import lahzouz.com.campusalert.databinding.FragmentAlertDetailsBinding;
 import lahzouz.com.campusalert.service.model.Alert;
@@ -68,7 +70,15 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                 ((MainActivity)getActivity()).removeCurrentFragment(this.getClass().getName());
                 return true;
             case R.id.action_maps:
-                Alert currentAlert = viewModelDetails.getAlert(alertGlobalId);
+                Alert currentAlert = null;
+                try {
+                    currentAlert = viewModelDetails.getAlert(alertGlobalId);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(baseUrl+"&query="+currentAlert.getLatitude()+","+currentAlert.getLongitude()));
                 mapIntent.setPackage("com.google.android.apps.maps");
@@ -88,7 +98,13 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                 getActivity().getApplication(), getArguments().getLong(KEY_PROJECT_ID));
         viewModelDetails = ViewModelProviders.of(this, factory)
                 .get(AlertViewModel.class);
-        binding.setAlert(viewModelDetails.getAlert(getArguments().getLong(KEY_PROJECT_ID)));
+        try {
+            binding.setAlert(viewModelDetails.getAlert(getArguments().getLong(KEY_PROJECT_ID)));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         binding.setCallback(alertClickCallback);
         binding.setIsLoading(true);
 

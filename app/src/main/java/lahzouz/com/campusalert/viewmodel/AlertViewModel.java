@@ -12,6 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -19,10 +20,13 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import lahzouz.com.campusalert.service.database.AppDatabase;
 import lahzouz.com.campusalert.service.localisation.LocationProvider;
 import lahzouz.com.campusalert.service.model.Alert;
+
+import static lahzouz.com.campusalert.view.ui.AlertListFragment.TAG;
 
 
 public class AlertViewModel extends AndroidViewModel {
@@ -93,18 +97,6 @@ public class AlertViewModel extends AndroidViewModel {
         this.alert.set(alert);
     }
 
-    public void deleteAlert(Alert alert) {
-        appDatabase.AlertModel().delete(alert);
-    }
-
-    public void insertAlert(Alert alert) {
-        appDatabase.AlertModel().insertOne(alert);
-    }
-
-    public Alert getAlert(long alertId) {
-        return appDatabase.AlertModel().getAlert(alertId);
-    }
-
     public String getAddress() {
         return address;
     }
@@ -128,6 +120,111 @@ public class AlertViewModel extends AndroidViewModel {
     public LiveData<Location> getLocationLiveData() {
         return locationLiveData;
     }
+
+
+
+    public void deleteAlert(Alert alert) {
+        new DeleteAlertAsync(alert).execute();
+    }
+
+    private class DeleteAlertAsync extends AsyncTask<Void, Void, Void> {
+
+        private Alert alert;
+        public DeleteAlertAsync(Alert alert) {
+            super();
+            // do stuff
+            this.alert=alert;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Perform pre-adding operation here.
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //Let's add some dummy data to the database.
+            Log.d(TAG, "doInBackground: delete"+alert.toString());
+            appDatabase.AlertModel().delete(alert);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            //To after addition operation here.
+        }
+    }
+
+
+    public void insertAlert(Alert alert) {
+             new InsertAlertAsync(alert).execute();
+    }
+
+    private class InsertAlertAsync extends AsyncTask<Void, Void, Void> {
+
+        private Alert alert;
+        public InsertAlertAsync(Alert alert) {
+            super();
+            // do stuff
+            this.alert=alert;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Perform pre-adding operation here.
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //Let's add some dummy data to the database.
+            Log.d(TAG, "doInBackground: insert"+alert.toString());
+            appDatabase.AlertModel().insertOne(alert);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            //To after addition operation here.
+        }
+    }
+
+    public Alert getAlert(long alertId) throws ExecutionException, InterruptedException {
+        return new GetAlertAsync(alertId).execute().get();
+    }
+
+    private class GetAlertAsync extends AsyncTask<Void, Void, Alert> {
+
+        private long alertId;
+        public GetAlertAsync(long alertId) {
+            super();
+            // do stuff
+            this.alertId=alertId;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Perform pre-adding operation here.
+        }
+
+        @Override
+        protected Alert doInBackground(Void... voids) {
+            //Let's add some dummy data to the database.
+            Log.d(TAG, "doInBackground: get alert by id"+alertId);
+            return appDatabase.AlertModel().getAlert(alertId);
+        }
+
+        @Override
+        protected void onPostExecute(Alert alert) {
+            super.onPostExecute(alert);
+            //To after addition operation here.
+        }
+    }
+
 
     /**
      * A creator is used to inject the alert ID into the ViewModel

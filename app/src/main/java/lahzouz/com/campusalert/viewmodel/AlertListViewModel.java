@@ -6,13 +6,17 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.os.AsyncTask;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lahzouz.com.campusalert.service.database.AppDatabase;
 import lahzouz.com.campusalert.service.model.Alert;
 
 import static lahzouz.com.campusalert.service.database.InitDatabase.initAlertList;
+import static lahzouz.com.campusalert.view.ui.AlertListFragment.TAG;
 
 
 public class AlertListViewModel extends AndroidViewModel implements LifecycleObserver {
@@ -27,16 +31,71 @@ public class AlertListViewModel extends AndroidViewModel implements LifecycleObs
     }
 
     public void insertAllAlerts(List<Alert> list) {
-        appDatabase.AlertModel().insertAll(list);
+        new InsertAllAlertsAsync(list).execute();
     }
 
-    public void deleteAlert(Alert alert) {
-        appDatabase.AlertModel().delete(alert);
+    private class InsertAllAlertsAsync extends AsyncTask<Void, Void, Void> {
+
+        private List<Alert> alertList;
+        public InsertAllAlertsAsync(List<Alert> alertList) {
+            super();
+            // do stuff
+            this.alertList=alertList;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Perform pre-adding operation here.
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //Let's add some dummy data to the database.
+            Log.d(TAG, "doInBackground: Insert alert list");
+            appDatabase.AlertModel().insertAll(alertList);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            //To after addition operation here.
+        }
     }
+
+
 
     public void deleteAllAlerts() {
-        appDatabase.AlertModel().deleteAll();
+        new DeleteAllAlertsAsync().execute();
     }
+
+    private class DeleteAllAlertsAsync extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //Perform pre-adding operation here.
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //Let's add some dummy data to the database.
+            Log.d(TAG, "doInBackground: Delete alert list");
+            appDatabase.AlertModel().deleteAll();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            //To after addition operation here.
+        }
+    }
+
+
+
+
 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)

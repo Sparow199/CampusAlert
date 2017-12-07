@@ -171,7 +171,6 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
             }
         });
 
-
     }
 
     private void checkLocationPermission(Context context) {
