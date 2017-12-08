@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "lahzouz.com.campusalert"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -32,7 +32,7 @@ android {
 
 // Versions
 project.ext {
-    appcompat = "27.0.2"
+    appcompat = "26.1.0"
     rc = "1.0.0"
     rcLife = "1.0.0"
     retrofit = "2.3.0"
