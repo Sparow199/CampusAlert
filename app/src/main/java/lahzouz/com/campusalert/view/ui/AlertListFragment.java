@@ -5,6 +5,7 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,18 +21,18 @@ import lahzouz.com.campusalert.view.adapter.AlertAdapter;
 import lahzouz.com.campusalert.view.callback.AlertClickCallback;
 import lahzouz.com.campusalert.viewmodel.AlertListViewModel;
 
-import static android.databinding.DataBindingUtil.*;
+import static android.databinding.DataBindingUtil.inflate;
 
 
 public class AlertListFragment extends Fragment implements LifecycleOwner {
 
     public static final String TAG = "AlertListFragment";
-
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
         @Override
         public void onClick(Alert alert) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
                 Fragment f = AlertFragment.forAlert(alert.getId());
+                assert (getActivity()) != null;
                 ((MainActivity) getActivity()).show(f);
             }
         }
@@ -42,6 +43,7 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
 
         public void onAddClick() {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+                assert (getActivity()) != null;
                 ((MainActivity) getActivity()).show(new AlertNewFragment());
             }
         }
@@ -51,14 +53,12 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
         }
 
     };
-
     private AlertAdapter alertAdapter;
     private FragmentAlertListBinding binding;
-    private AlertListViewModel viewModelList;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = inflate(inflater, R.layout.fragment_alert_list, container, false);
         alertAdapter = new AlertAdapter(alertClickCallback);
@@ -69,17 +69,19 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+        assert (getActivity()) != null;
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModelList = ViewModelProviders.of(this).get(AlertListViewModel.class);
+        AlertListViewModel viewModelList = ViewModelProviders.of(this).get(AlertListViewModel.class);
         observeViewModel(viewModelList);
+        assert (getActivity()) != null;
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 

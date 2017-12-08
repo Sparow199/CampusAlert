@@ -14,8 +14,6 @@ import lahzouz.com.campusalert.viewmodel.AlertListViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AlertListViewModel viewModelList;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.fragment_container, fragment, AlertListFragment.TAG).commit();
         }
 
-        viewModelList = ViewModelProviders.of(this).get(AlertListViewModel.class);
+        AlertListViewModel viewModelList = ViewModelProviders.of(this).get(AlertListViewModel.class);
         this.getLifecycle().addObserver(viewModelList);
     }
 
@@ -50,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
     public void removeCurrentFragment(String className){
         getSupportFragmentManager().popBackStack(className, FragmentManager.POP_BACK_STACK_INCLUSIVE);

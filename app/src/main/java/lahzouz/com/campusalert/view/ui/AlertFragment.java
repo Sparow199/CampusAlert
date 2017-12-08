@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -40,9 +41,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     private FragmentAlertDetailsBinding binding;
     private AlertViewModel viewModelDetails;
     private Snackbar snackbar;
-
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
-
 
         @Override
         public void onDeleteClick(final Alert alert) {
@@ -60,13 +59,14 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
+                                    viewModelDetails.deleteAlert(alert);
                                     snackbar = Snackbar.make(getView().findViewById(R.id.coordinator_details), R.string.alert_deleted, Snackbar.LENGTH_LONG).addCallback(new Snackbar.Callback() {
 
                                         @Override
                                         public void onDismissed(Snackbar snackbar, int event) {
                                             //see Snackbar.Callback docs for event details
                                             if (event == 2) {
-                                                viewModelDetails.deleteAlert(alert);
+                                                assert (getActivity()) != null;
                                                 ((MainActivity) getActivity()).removeCurrentFragment(className);
                                             }
 
@@ -81,8 +81,10 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                                     snackbar.setAction("Annuler", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
+                                            viewModelDetails.insertAlert(alert);
                                             Snackbar snackbar1 = Snackbar.make(getView().findViewById(R.id.coordinator_details), R.string.alert_restored, Snackbar.LENGTH_SHORT);
                                             snackbar1.show();
+
                                         }
                                     });
                                     snackbar.show();
@@ -90,6 +92,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+
                                 }
                             })
                             .setIcon(R.drawable.ic_warning_white_48dp)
@@ -130,7 +133,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate this data binding layout
         binding = inflate(inflater, R.layout.fragment_alert_details, container, false);
@@ -140,9 +143,10 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+        assert (getActivity()) != null;
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         className = this.getClass().getName();
     }
@@ -150,6 +154,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        assert (getActivity()) != null;
         getActivity().getMenuInflater().inflate(R.menu.maps_menu, menu);
     }
 
@@ -158,18 +163,18 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         // Handle item selection
         switch (item.getItemId()) {
             case android.R.id.home:
+                assert (getActivity()) != null;
                 ((MainActivity)getActivity()).removeCurrentFragment(this.getClass().getName());
                 return true;
             case R.id.action_maps:
                 Alert currentAlert = null;
                 try {
                     currentAlert = viewModelDetails.getAlert(alertGlobalId);
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
 
+                assert currentAlert != null;
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(baseUrl+"&query="+currentAlert.getLatitude()+","+currentAlert.getLongitude()));
                 mapIntent.setPackage("com.google.android.apps.maps");
@@ -185,15 +190,14 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        assert (getActivity()) != null;
         AlertViewModel.Factory factory = new AlertViewModel.Factory(
                 getActivity().getApplication(), getArguments().getLong(KEY_PROJECT_ID));
         viewModelDetails = ViewModelProviders.of(this, factory)
                 .get(AlertViewModel.class);
         try {
             binding.setAlert(viewModelDetails.getAlert(getArguments().getLong(KEY_PROJECT_ID)));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         binding.setCallback(alertClickCallback);

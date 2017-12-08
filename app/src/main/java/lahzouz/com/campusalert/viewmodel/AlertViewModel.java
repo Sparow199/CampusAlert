@@ -1,5 +1,6 @@
 package lahzouz.com.campusalert.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
@@ -31,7 +32,6 @@ import static lahzouz.com.campusalert.view.ui.AlertListFragment.TAG;
 
 public class AlertViewModel extends AndroidViewModel {
     private final LiveData<Alert> alertObservable;
-    private final long alertId;
     public ObservableField<Alert> alert = new ObservableField<>();
     private AppDatabase appDatabase;
     private MutableLiveData<Location> locationLiveData = new MutableLiveData<>();
@@ -40,10 +40,9 @@ public class AlertViewModel extends AndroidViewModel {
     private String address;
     private Geocoder geocoder;
 
-    public AlertViewModel(@NonNull Application application,
-                          final long alertId) {
+    AlertViewModel(@NonNull Application application,
+                   final long alertId) {
         super(application);
-        this.alertId = alertId;
         appDatabase = AppDatabase.getAppDatabase(application.getApplicationContext());
         alertObservable = appDatabase.AlertModel().findOneAlert(alertId);
         this.geocoder = new Geocoder(application, Locale.getDefault());
@@ -127,10 +126,42 @@ public class AlertViewModel extends AndroidViewModel {
         new DeleteAlertAsync(alert).execute();
     }
 
+    public void insertAlert(Alert alert) {
+        new InsertAlertAsync(alert).execute();
+    }
+
+    public Alert getAlert(long alertId) throws ExecutionException, InterruptedException {
+        return new GetAlertAsync(alertId).execute().get();
+    }
+
+    /**
+     * A creator is used to inject the alert ID into the ViewModel
+     */
+    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+
+        @NonNull
+        private final Application application;
+        private final long alertId;
+
+        public Factory(@NonNull Application application, long alertId) {
+            this.application = application;
+            this.alertId = alertId;
+        }
+
+        @NonNull
+        @Override
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            //noinspection unchecked
+            return (T) new AlertViewModel(application, alertId);
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
     private class DeleteAlertAsync extends AsyncTask<Void, Void, Void> {
 
         private Alert alert;
-        public DeleteAlertAsync(Alert alert) {
+
+        DeleteAlertAsync(Alert alert) {
             super();
             // do stuff
             this.alert=alert;
@@ -157,15 +188,12 @@ public class AlertViewModel extends AndroidViewModel {
         }
     }
 
-
-    public void insertAlert(Alert alert) {
-             new InsertAlertAsync(alert).execute();
-    }
-
+    @SuppressLint("StaticFieldLeak")
     private class InsertAlertAsync extends AsyncTask<Void, Void, Void> {
 
         private Alert alert;
-        public InsertAlertAsync(Alert alert) {
+
+        InsertAlertAsync(Alert alert) {
             super();
             // do stuff
             this.alert=alert;
@@ -192,14 +220,12 @@ public class AlertViewModel extends AndroidViewModel {
         }
     }
 
-    public Alert getAlert(long alertId) throws ExecutionException, InterruptedException {
-        return new GetAlertAsync(alertId).execute().get();
-    }
-
+    @SuppressLint("StaticFieldLeak")
     private class GetAlertAsync extends AsyncTask<Void, Void, Alert> {
 
         private long alertId;
-        public GetAlertAsync(long alertId) {
+
+        GetAlertAsync(long alertId) {
             super();
             // do stuff
             this.alertId=alertId;
@@ -222,27 +248,6 @@ public class AlertViewModel extends AndroidViewModel {
         protected void onPostExecute(Alert alert) {
             super.onPostExecute(alert);
             //To after addition operation here.
-        }
-    }
-
-
-    /**
-     * A creator is used to inject the alert ID into the ViewModel
-     */
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
-
-        @NonNull
-        private final Application application;
-        private final long alertId;
-        public Factory(@NonNull Application application, long alertId) {
-            this.application = application;
-            this.alertId = alertId;
-        }
-
-        @Override
-        public <T extends ViewModel> T create(Class<T> modelClass) {
-            //noinspection unchecked
-            return (T) new AlertViewModel(application, alertId);
         }
     }
 

@@ -1,5 +1,6 @@
 package lahzouz.com.campusalert.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.Lifecycle;
@@ -9,7 +10,6 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lahzouz.com.campusalert.service.database.AppDatabase;
@@ -30,14 +30,33 @@ public class AlertListViewModel extends AndroidViewModel implements LifecycleObs
         alertListObservable = appDatabase.AlertModel().getAll();
     }
 
-    public void insertAllAlerts(List<Alert> list) {
+    private void insertAllAlerts(List<Alert> list) {
         new InsertAllAlertsAsync(list).execute();
     }
 
+    private void deleteAllAlerts() {
+        new DeleteAllAlertsAsync().execute();
+    }
+
+    /**
+     * Expose the LiveData Projects query so the UI can observe it.
+     */
+    public LiveData<List<Alert>> getProjectListObservable() {
+        return alertListObservable;
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    void create() {
+        deleteAllAlerts();
+        insertAllAlerts(initAlertList());
+    }
+
+    @SuppressLint("StaticFieldLeak")
     private class InsertAllAlertsAsync extends AsyncTask<Void, Void, Void> {
 
         private List<Alert> alertList;
-        public InsertAllAlertsAsync(List<Alert> alertList) {
+
+        InsertAllAlertsAsync(List<Alert> alertList) {
             super();
             // do stuff
             this.alertList=alertList;
@@ -64,12 +83,7 @@ public class AlertListViewModel extends AndroidViewModel implements LifecycleObs
         }
     }
 
-
-
-    public void deleteAllAlerts() {
-        new DeleteAllAlertsAsync().execute();
-    }
-
+    @SuppressLint("StaticFieldLeak")
     private class DeleteAllAlertsAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -93,22 +107,5 @@ public class AlertListViewModel extends AndroidViewModel implements LifecycleObs
         }
     }
 
-
-
-
-
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    void create() {
-        deleteAllAlerts();
-        insertAllAlerts(initAlertList());
-    }
-
-    /**
-     * Expose the LiveData Projects query so the UI can observe it.
-     */
-    public LiveData<List<Alert>> getProjectListObservable() {
-        return alertListObservable;
-    }
 
 }

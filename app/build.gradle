@@ -16,7 +16,6 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
-        resValue "string", "google_maps_key", (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
     }
     buildTypes {
         release {
@@ -54,6 +53,7 @@ dependencies {
     implementation  "com.android.support.constraint:constraint-layout:$project.constraintLayout"
     implementation  "com.android.support:support-v4:$project.appcompat"
     implementation  "com.android.support:design:$project.appcompat"
+//    implementation "com.android.support:support-annotations:$project.appcompat"
 
     // Lifecycle
     implementation  "android.arch.lifecycle:runtime:1.0.3"
@@ -75,5 +75,4 @@ dependencies {
     // Easy permission
     implementation 'pub.devrel:easypermissions:1.0.1'
 
-    compile 'com.android.support:support-annotations:27.0.2'
 }

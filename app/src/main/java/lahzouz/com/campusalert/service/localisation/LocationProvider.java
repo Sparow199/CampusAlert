@@ -36,8 +36,6 @@ public class LocationProvider {
     }
 
 
-
-
     public void locationUpdate(Context context, LocationListener locationListener){
 
         Criteria criteria = new Criteria();

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -57,13 +58,14 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
                 if (alert.getLatitude() != -2 && alert.getLongitude() != -2) {
                     if (alert.getAddress() != null && !alert.getAddress().equals("")) {
                         viewModelDetails.insertAlert(alert);
+                        assert (getActivity()) != null;
                         ((MainActivity) getActivity()).removeCurrentFragment(className);
                     } else {
                         Toast.makeText(getActivity(), "Erreur, veuillez indiquer une addresse", Toast.LENGTH_LONG).show();
                     }
                 } else {
 
-                    Toast.makeText(getActivity(), "Erreur, données de localisation introuvables", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Erreur, données de localisation introuvables, veuillez activer votre GPS s'ils vous plait", Toast.LENGTH_LONG).show();
                 }
             } else {
                 Toast.makeText(getActivity(), "Erreur,veuillez indiquer un type", Toast.LENGTH_LONG).show();
@@ -85,11 +87,10 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
 
     };
     private EditText edit_address;
-    private EditText edit_desc;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate this data binding layout
         binding = inflate(inflater, R.layout.fragment_alert_new, container, false);
@@ -99,14 +100,14 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         spinner_type = view.findViewById(R.id.alert_type_spinner);
         edit_address = view.findViewById(R.id.address);
-        edit_desc = view.findViewById(R.id.desc);
 
         setHasOptionsMenu(true);
+        assert (getActivity()) != null;
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         className = this.getClass().getName();
         checkLocationPermission(getContext());
@@ -115,6 +116,7 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        assert (getActivity()) != null;
         getActivity().getMenuInflater().inflate(R.menu.geolocation_menu, menu);
     }
 
@@ -123,6 +125,7 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.home:
+                assert (getActivity()) != null;
                 ((MainActivity)getActivity()).removeCurrentFragment(className);
                 return true;
             case R.id.action_location:
@@ -141,7 +144,7 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        assert (getActivity()) != null;
         AlertViewModel.Factory factory = new AlertViewModel.Factory(
                 getActivity().getApplication(), 0);
         viewModelDetails = ViewModelProviders.of(this, factory).get(AlertViewModel.class);
@@ -177,14 +180,14 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            EasyPermissions.requestPermissions(this, "Need fine location Permission", FINE_LOCATION_PERMISSION,
+            EasyPermissions.requestPermissions(this, "L'application à besoin d'acceder à la permission", FINE_LOCATION_PERMISSION,
                     Manifest.permission.ACCESS_FINE_LOCATION);
         }
 
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
