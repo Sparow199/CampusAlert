@@ -75,4 +75,5 @@ dependencies {
     // Easy permission
     implementation 'pub.devrel:easypermissions:1.0.1'
 
+    compile 'com.android.support:support-annotations:27.0.2'
 }
