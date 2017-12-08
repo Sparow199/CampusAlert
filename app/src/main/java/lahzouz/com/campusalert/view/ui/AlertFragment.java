@@ -41,6 +41,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     private FragmentAlertDetailsBinding binding;
     private AlertViewModel viewModelDetails;
     private Snackbar snackbar;
+    private Menu myMenu;
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
 
         @Override
@@ -59,6 +60,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
+                                    myMenu.getItem(0).setVisible(false);
                                     viewModelDetails.deleteAlert(alert);
                                     snackbar = Snackbar.make(getView().findViewById(R.id.coordinator_details), R.string.alert_deleted, Snackbar.LENGTH_LONG).addCallback(new Snackbar.Callback() {
 
@@ -82,6 +84,7 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                                         @Override
                                         public void onClick(View view) {
                                             viewModelDetails.insertAlert(alert);
+                                            myMenu.getItem(0).setVisible(true);
                                             Snackbar snackbar1 = Snackbar.make(getView().findViewById(R.id.coordinator_details), R.string.alert_restored, Snackbar.LENGTH_SHORT);
                                             snackbar1.show();
 
@@ -152,42 +155,6 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        assert (getActivity()) != null;
-        getActivity().getMenuInflater().inflate(R.menu.maps_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                assert (getActivity()) != null;
-                ((MainActivity)getActivity()).removeCurrentFragment(this.getClass().getName());
-                return true;
-            case R.id.action_maps:
-                Alert currentAlert = null;
-                try {
-                    currentAlert = viewModelDetails.getAlert(alertGlobalId);
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                assert currentAlert != null;
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse(baseUrl+"&query="+currentAlert.getLatitude()+","+currentAlert.getLongitude()));
-                mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
-                return true;
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         assert (getActivity()) != null;
@@ -218,6 +185,43 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                 }
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        assert (getActivity()) != null;
+        getActivity().getMenuInflater().inflate(R.menu.maps_menu, menu);
+        myMenu = menu;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                assert (getActivity()) != null;
+                ((MainActivity)getActivity()).removeCurrentFragment(this.getClass().getName());
+                return true;
+            case R.id.action_maps:
+                Alert currentAlert = null;
+                try {
+                    currentAlert = viewModelDetails.getAlert(alertGlobalId);
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                assert currentAlert != null;
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(baseUrl+"&query="+currentAlert.getLatitude()+","+currentAlert.getLongitude()));
+                mapIntent.setPackage("com.google.android.apps.maps");
+                startActivity(mapIntent);
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
