@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,7 +39,10 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     String baseUrl ="https://www.google.com/maps/search/?api=1";
     private FragmentAlertDetailsBinding binding;
     private AlertViewModel viewModelDetails;
+    private Snackbar snackbar;
+
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
+
 
         @Override
         public void onDeleteClick(final Alert alert) {
@@ -56,19 +60,42 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
-                                    viewModelDetails.deleteAlert(alert);
-                                    ((MainActivity) getActivity()).removeCurrentFragment(className);
+                                    snackbar = Snackbar.make(getView().findViewById(R.id.coordinator_details), R.string.alert_deleted, Snackbar.LENGTH_LONG).addCallback(new Snackbar.Callback() {
+
+                                        @Override
+                                        public void onDismissed(Snackbar snackbar, int event) {
+                                            //see Snackbar.Callback docs for event details
+                                            if (event == 2) {
+                                                viewModelDetails.deleteAlert(alert);
+                                                ((MainActivity) getActivity()).removeCurrentFragment(className);
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onShown(Snackbar snackbar) {
+
+                                        }
+                                    });
+
+                                    snackbar.setAction("Annuler", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Snackbar snackbar1 = Snackbar.make(getView().findViewById(R.id.coordinator_details), R.string.alert_restored, Snackbar.LENGTH_SHORT);
+                                            snackbar1.show();
+                                        }
+                                    });
+                                    snackbar.show();
                                 }
                             })
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // do nothing
                                 }
                             })
                             .setIcon(R.drawable.ic_warning_white_48dp)
                             .show();
-
                 }
+
 
             }
         }
