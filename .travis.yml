@@ -20,13 +20,14 @@ cache:
 env:
  global:
  - ANDROID_API_LEVEL=27
- - ANDROID_BUILD_TOOLS=27.0.2
+ - ANDROID_BUILD_TOOLS=26.0.2
 
  
 android:
   components:
   - tools
   - platform-tools
+  - tools # Running this twice get's the latest build tools (https://github.com/codepath/android_guides/wiki/Setting-up-Travis-CI)
   - build-tools-$ANDROID_BUILD_TOOLS
   - android-$ANDROID_API_LEVEL
   - extra
