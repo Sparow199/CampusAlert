@@ -4,7 +4,10 @@ sudo: required
 language: android
 jdk: oraclejdk8
 
+install: true
+
 before_cache:
+  - rm -rf $HOME/.gradle/*
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 
@@ -19,18 +22,17 @@ env:
  - ANDROID_API_LEVEL=27
  - ANDROID_BUILD_TOOLS=27.0.2
 
-install:
-  - echo y | android update sdk -u -a -t tools
-  - echo y | android update sdk -u -a -t platform-tools
-  - echo y | android update sdk -u -a -t tools
-  - echo y | android update sdk -u -a -t build-tools-$ANDROID_BUILD_TOOLS
-  - echo y | android update sdk -u -a -t android-$ANDROID_API_LEVEL
-  - echo y | android update sdk -u -a -t extra-google-m2repository
-  - echo y | android update sdk -u -a -t extra-android-m2repository
-
+ 
+android:
+  components:
+  - tools
+  - platform-tools
+  - tools # Running this twice get's the latest build tools (https://github.com/codepath/android_guides/wiki/Setting-up-Travis-CI)
+  - build-tools-$ANDROID_BUILD_TOOLS
+  - android-$ANDROID_API_LEVEL
+  - extra
 licenses:
   - '.+'
-
 before_script:
   - chmod +x gradlew 
 
