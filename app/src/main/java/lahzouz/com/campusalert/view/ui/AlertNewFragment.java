@@ -61,14 +61,16 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
                         assert (getActivity()) != null;
                         ((MainActivity) getActivity()).removeCurrentFragment(className);
                     } else {
-                        Toast.makeText(getActivity(), "Erreur, veuillez indiquer une addresse", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Erreur, veuillez indiquer une addresse", Toast.LENGTH_SHORT).show();
                     }
                 } else {
+                    if(checkLocationPermission(getContext())){
+                        Toast.makeText(getActivity(), "Erreur, données de localisation introuvables, veuillez activer votre GPS s'ils vous plait", Toast.LENGTH_SHORT).show();
+                    }
 
-                    Toast.makeText(getActivity(), "Erreur, données de localisation introuvables, veuillez activer votre GPS s'ils vous plait", Toast.LENGTH_LONG).show();
                 }
             } else {
-                Toast.makeText(getActivity(), "Erreur,veuillez indiquer un type", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Erreur,veuillez indiquer un type", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -133,7 +135,9 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
                     viewModelDetails.getCurrentLocation();
                     Toast.makeText(getActivity(), "Localisation actualisée avec succèe", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getActivity(), "Veuillez activer votre GPS s'ils vous plait", Toast.LENGTH_SHORT).show();
+                    if(checkLocationPermission(getContext())) {
+                        Toast.makeText(getActivity(), "Veuillez activer votre GPS s'ils vous plait", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 return true;
             default:
@@ -176,14 +180,15 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
 
     }
 
-    private void checkLocationPermission(Context context) {
+    private boolean checkLocationPermission(Context context) {
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             EasyPermissions.requestPermissions(this, "L'application à besoin d'acceder à la permission", FINE_LOCATION_PERMISSION,
                     Manifest.permission.ACCESS_FINE_LOCATION);
+            return false;
         }
-
+        return true;
     }
 
     @Override
@@ -199,7 +204,7 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> list) {
-        Toast.makeText(getActivity(), "Permission refusée, impossible d'ajouter une alerte", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Permission refusée, impossible d'ajouter une alerte", Toast.LENGTH_SHORT).show();
     }
 
 
