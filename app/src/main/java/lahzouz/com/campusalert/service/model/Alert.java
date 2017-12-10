@@ -10,12 +10,15 @@ import java.util.Date;
 
 import lahzouz.com.campusalert.service.database.Converters;
 
+/**
+ * Classe modèle, permets de persister l'objet Alert.
+ */
 @Entity(tableName = "alert_table")
 public class Alert {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "alert_id")
-    public long id;
+    public Long id;
     @ColumnInfo(name = "alert_type")
     private String type;
     @ColumnInfo(name = "alert_desc")
@@ -24,82 +27,147 @@ public class Alert {
     private String address;
     @ColumnInfo(name = "alert_lati")
     private double latitude;
-    @ColumnInfo(name = "alert_long")
-    private double longitude;
+    @ColumnInfo(name = "alert_Long")
+    private double Longitude;
     @ColumnInfo(name = "alert_date")
     @TypeConverters({Converters.class})
     private Date created_at;
 
-
+    /**
+     * Constructeur par défault
+     */
     @Ignore
     public Alert() {
-        longitude = -2;
-        latitude = -2;
+        Longitude = -404;
+        latitude = -404;
     }
 
-    public Alert(String type, String description, String address, double latitude, double longitude, Date created_at) {
+    /**
+     * Constructeur numéro 2
+     * @param type
+     * @param description
+     * @param address
+     * @param latitude
+     * @param Longitude
+     * @param created_at
+     */
+    public Alert(String type, String description, String address, double latitude, double Longitude, Date created_at) {
         this.type = type;
         this.description = description;
         this.address = address;
         this.latitude = latitude;
-        this.longitude = longitude;
+        this.Longitude = Longitude;
         this.created_at = created_at;
     }
 
-
+    /**
+     * Getter 
+     * @return String
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Setter
+     * @param type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
-
+    /**
+     * Getter
+     * @return String
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Setter
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Getter
+     * @return String
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * Setter
+     * @param address
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /**
+     * Getter
+     * @return double
+     */
     public double getLatitude() {
         return latitude;
     }
 
+    /**
+     * Setter
+     * @param latitude
+     */
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
+    /**
+     * Getter
+     * @return Double
+     */
     public double getLongitude() {
-        return longitude;
+        return Longitude;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    /**
+     * Setter
+     * @param Longitude
+     */
+    public void setLongitude(double Longitude) {
+        this.Longitude = Longitude;
     }
 
+    /**
+     * Getter
+     * @return Date
+     */
     public Date getCreated_at() {
         return created_at;
     }
 
+    /**
+     * Setter
+     * @param created_at
+     */
     public void setCreated_at(Date created_at) {
         this.created_at = created_at;
     }
 
-    public long getId() {
+    /**
+     * Getter
+     * @return Long
+     */
+    public Long getId() {
         return id;
     }
 
+    /**
+     * ToString
+     * @return String
+     */
     @Override
     public String toString() {
         return "Alert{" +
@@ -107,11 +175,16 @@ public class Alert {
                 ", description='" + description + '\'' +
                 ", address='" + address + '\'' +
                 ", latitude=" + latitude +
-                ", longitude=" + longitude +
+                ", Longitude=" + Longitude +
                 ", created_at=" + created_at +
                 '}';
     }
 
+    /**
+     * Equals
+     * @param o
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -119,13 +192,13 @@ public class Alert {
 
         Alert alert = (Alert) o;
 
-        if (getType() != null ? !getType().equals(alert.getType()) : alert.getType() != null)
-            return false;
-        if (getDescription() != null ? !getDescription().equals(alert.getDescription()) : alert.getDescription() != null)
-            return false;
-        return getAddress() != null ? getAddress().equals(alert.getAddress()) : alert.getAddress() == null;
+        return getType().equals(alert.getType()) && getAddress().equals(alert.getAddress());
     }
 
+    /**
+     * HashCode
+     * @return int
+     */
     @Override
     public int hashCode() {
         int result = getType() != null ? getType().hashCode() : 0;

@@ -29,7 +29,9 @@ import lahzouz.com.campusalert.service.model.Alert;
 
 import static lahzouz.com.campusalert.view.ui.AlertListFragment.TAG;
 
-
+/**
+ *  * Classe Alert viewModel qui gère la connexion entre la partie vue et modèle.
+ */
 public class AlertViewModel extends AndroidViewModel {
     private final LiveData<Alert> alertObservable;
     public ObservableField<Alert> alert = new ObservableField<>();
@@ -40,6 +42,11 @@ public class AlertViewModel extends AndroidViewModel {
     private String address;
     private Geocoder geocoder;
 
+    /**
+     * Constructeur.
+     * @param application
+     * @param alertId
+     */
     AlertViewModel(@NonNull Application application,
                    final long alertId) {
         super(application);
@@ -48,8 +55,15 @@ public class AlertViewModel extends AndroidViewModel {
         this.geocoder = new Geocoder(application, Locale.getDefault());
     }
 
+    /**
+     * Avoir les coordonnée GPS.
+     */
     public void getCurrentLocation(){
         LocationListener locationListener= new LocationListener(){
+            /**
+             * LocationListener onLocationChanged.
+             * @param location
+             */
             @Override
             public void onLocationChanged(Location location) {
                 try {
@@ -73,16 +87,30 @@ public class AlertViewModel extends AndroidViewModel {
                 }
             }
 
+            /**
+             * LocationListener onStatusChanged.
+             * @param s
+             * @param i
+             * @param bundle
+             */
             @Override
             public void onStatusChanged(String s, int i, Bundle bundle) {
 
             }
 
+            /**
+             * LocationListener onProviderEnabled.
+             * @param s
+             */
             @Override
             public void onProviderEnabled(String s) {
 
             }
 
+            /**
+             * LocationListener onProviderDisabled.
+             * @param s
+             */
             @Override
             public void onProviderDisabled(String s) {
 
@@ -92,50 +120,92 @@ public class AlertViewModel extends AndroidViewModel {
         locationProvider.locationUpdate(this.getApplication(),locationListener);
     }
 
+    /**
+     * Setter
+     * @param alert
+     */
     public void setAlert(Alert alert) {
         this.alert.set(alert);
     }
 
+    /**
+     * Getter
+     * @return String
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * Getter
+     * @return double
+     */
     public double getLongitude() {return longitude;}
 
+    /**
+     * Getter
+     * @return double
+     */
     public double getLatitude() {
         return latitude;
     }
 
-
+    /**
+     * Vérifie si la localisation est activée sur l'appareil.
+     * @param context
+     * @return boolean
+     */
     public boolean checkLocationEnabled(Context context) {
         LocationProvider locationProvider = new LocationProvider();
         return locationProvider.canGetLocation(context);
     }
 
+    /**
+     * Getter
+     * @return LiveData<Alert>
+     */
     public LiveData<Alert> getObservableProject() {
         return alertObservable;
     }
 
+    /**
+     * Getter
+     * @return LiveData<Location>
+     */
     public LiveData<Location> getLocationLiveData() {
         return locationLiveData;
     }
 
 
-
+    /**
+     * Supprimer l'alerte
+     * @param alert
+     */
     public void deleteAlert(Alert alert) {
         new DeleteAlertAsync(alert).execute();
     }
 
+    /**
+     * Insérer l'alerte
+     * @param alert
+     */
     public void insertAlert(Alert alert) {
         new InsertAlertAsync(alert).execute();
     }
 
+    /**
+     * AsyncTask, permets de retourner une alerte.
+     * @param alertId
+     * @return Alert
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public Alert getAlert(long alertId) throws ExecutionException, InterruptedException {
         return new GetAlertAsync(alertId).execute().get();
     }
 
     /**
-     * A creator is used to inject the alert ID into the ViewModel
+     * Classe usine, pour la création des viewModels.
      */
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
 
@@ -143,11 +213,22 @@ public class AlertViewModel extends AndroidViewModel {
         private final Application application;
         private final long alertId;
 
+        /**
+         * Constructeur.
+         * @param application
+         * @param alertId
+         */
         public Factory(@NonNull Application application, long alertId) {
             this.application = application;
             this.alertId = alertId;
         }
 
+        /**
+         * Retourner un vieModel.
+         * @param modelClass
+         * @param <T>
+         * @return AlertViewModel
+         */
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
@@ -156,23 +237,38 @@ public class AlertViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * AsyncTask pour supprimer une alerte.
+     */
     @SuppressLint("StaticFieldLeak")
     private class DeleteAlertAsync extends AsyncTask<Void, Void, Void> {
 
         private Alert alert;
 
+        /**
+         * Constructeur.
+         * @param alert
+         */
         DeleteAlertAsync(Alert alert) {
             super();
             // do stuff
             this.alert=alert;
         }
 
+        /**
+         * AsyncTask onPreExecute.
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             //Perform pre-adding operation here.
         }
 
+        /**
+         * AsyncTask doInBackground.
+         * @param voids
+         * @return null
+         */
         @Override
         protected Void doInBackground(Void... voids) {
             //Let's add some dummy data to the database.
@@ -181,6 +277,10 @@ public class AlertViewModel extends AndroidViewModel {
             return null;
         }
 
+        /**
+         * AsyncTask onPostExecute.
+         * @param aVoid
+         */
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
@@ -188,23 +288,38 @@ public class AlertViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * AsyncTask pour insérer une alerte.
+     */
     @SuppressLint("StaticFieldLeak")
     private class InsertAlertAsync extends AsyncTask<Void, Void, Void> {
 
         private Alert alert;
 
+        /**
+         * Constructeur.
+         * @param alert
+         */
         InsertAlertAsync(Alert alert) {
             super();
             // do stuff
             this.alert=alert;
         }
 
+        /**
+         * AsyncTask onPreExecute.
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             //Perform pre-adding operation here.
         }
 
+        /**
+         * AsyncTask doInBackground.
+         * @param voids
+         * @return null
+         */
         @Override
         protected Void doInBackground(Void... voids) {
             //Let's add some dummy data to the database.
@@ -213,6 +328,10 @@ public class AlertViewModel extends AndroidViewModel {
             return null;
         }
 
+        /**
+         * AsyncTask  onPostExecute.
+         * @param aVoid
+         */
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
@@ -220,23 +339,38 @@ public class AlertViewModel extends AndroidViewModel {
         }
     }
 
+    /**
+     * AsyncTask pour avoir une alerte.
+     */
     @SuppressLint("StaticFieldLeak")
     private class GetAlertAsync extends AsyncTask<Void, Void, Alert> {
 
         private long alertId;
 
+        /**
+         * Constructeur.
+         * @param alertId
+         */
         GetAlertAsync(long alertId) {
             super();
             // do stuff
             this.alertId=alertId;
         }
 
+        /**
+         * AsyncTask onPreExecute.
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             //Perform pre-adding operation here.
         }
 
+        /**
+         * AsyncTask doInBackground.
+         * @param voids
+         * @return Alert
+         */
         @Override
         protected Alert doInBackground(Void... voids) {
             //Let's add some dummy data to the database.
@@ -244,6 +378,10 @@ public class AlertViewModel extends AndroidViewModel {
             return appDatabase.AlertModel().getAlert(alertId);
         }
 
+        /**
+         * AsyncTask  onPostExecute.
+         * @param alert
+         */
         @Override
         protected void onPostExecute(Alert alert) {
             super.onPostExecute(alert);

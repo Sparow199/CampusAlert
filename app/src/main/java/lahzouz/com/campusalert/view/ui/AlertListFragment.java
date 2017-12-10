@@ -23,11 +23,22 @@ import lahzouz.com.campusalert.viewmodel.AlertListViewModel;
 
 import static android.databinding.DataBindingUtil.inflate;
 
-
+/**
+ * Classe fragment liste des alertes.
+ */
 public class AlertListFragment extends Fragment implements LifecycleOwner {
 
     public static final String TAG = "AlertListFragment";
+    private AlertAdapter alertAdapter;
+    private FragmentAlertListBinding binding;
+    /**
+     * Classe AlertClickCallback, qui gère les clics.
+     */
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
+        /**
+         * Afficher le détail d'une alerte.
+         * @param alert
+         */
         @Override
         public void onClick(Alert alert) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
@@ -37,10 +48,17 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
             }
         }
 
+        /**
+         * Supprimer une alerte.
+         * @param alert
+         */
         @Override
         public void onDeleteClick(Alert alert) {
         }
 
+        /**
+         * Ouvrir le fragment d'ajout de nouvelle alerte.
+         */
         public void onAddClick() {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
                 assert (getActivity()) != null;
@@ -48,14 +66,24 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
             }
         }
 
+        /**
+         * Enregistrer une alerte.
+         * @param alert
+         */
         @Override
         public void onSaveClick(Alert alert) {
         }
 
     };
-    private AlertAdapter alertAdapter;
-    private FragmentAlertListBinding binding;
 
+
+    /**
+     * Fragment onCreateView.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -68,6 +96,11 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
         return binding.getRoot();
     }
 
+    /**
+     * Fragment onViewCreated.
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -76,6 +109,10 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Fragment onActivityCreated.
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -85,6 +122,10 @@ public class AlertListFragment extends Fragment implements LifecycleOwner {
         ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
+    /**
+     * Observer le LiveData liste alertes.
+     * @param viewModel
+     */
     private void observeViewModel(AlertListViewModel viewModel) {
         // Update the list when the data changes
         viewModel.getProjectListObservable().observe(this, new Observer<List<Alert>>() {

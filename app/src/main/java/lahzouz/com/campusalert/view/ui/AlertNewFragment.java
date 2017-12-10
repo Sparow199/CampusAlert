@@ -36,17 +36,26 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.databinding.DataBindingUtil.inflate;
 
-
+/**
+ * Classe fragment ajouter nouvelle alerte.
+ */
 public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPermissions.PermissionCallbacks {
 
     private static final int FINE_LOCATION_PERMISSION = 0;
     private static String className;
     private FragmentAlertNewBinding binding;
+    private EditText edit_address;
     private Spinner spinner_type;
     private AlertViewModel viewModelDetails;
     private Alert alertGlobal = new Alert();
+    /**
+     * Classe AlertClickCallback, qui gère les clics.
+     */
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
-
+        /**
+         * Enregistrer une alerte.
+         * @param alert
+         */
         @Override
         public void onSaveClick(Alert alert) {
             alert.setType(alertGlobal.getType());
@@ -74,22 +83,40 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
             }
         }
 
-
+        /**
+         * Supprimer une alerte.
+         * @param alert
+         */
         @Override
         public void onDeleteClick(Alert alert) {
         }
 
+        /**
+         * Afficher le détail d'une alerte.
+         * @param alert
+         */
         @Override
         public void onClick(Alert alert) {
         }
 
+        /**
+         * Ouvrir le fragment d'ajout de nouvelle alerte.
+         */
         @Override
         public void onAddClick() {
         }
 
     };
-    private EditText edit_address;
 
+
+
+    /**
+     * Fragment onCreateView.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -101,6 +128,11 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         return binding.getRoot();
     }
 
+    /**
+     * Fragment onViewCreated.
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -115,6 +147,11 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         checkLocationPermission(getContext());
     }
 
+    /**
+     * Menu onViewCreated.
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -122,6 +159,11 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         getActivity().getMenuInflater().inflate(R.menu.geolocation_menu, menu);
     }
 
+    /**
+     * Menu onOptionsItemSelected.
+     * @param item
+     * @return boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -145,6 +187,10 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         }
     }
 
+    /**
+     * Fragment onActivityCreated.
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -155,13 +201,26 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         viewModelDetails.getCurrentLocation();
         binding.setAlert(new Alert());
         binding.setCallback(alertClickCallback);
-
+        /**
+         * Classe qui gère le spinner.
+         */
         spinner_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * Spinner onItemSelected.
+             * @param parent
+             * @param view
+             * @param pos
+             * @param id
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 alertGlobal.setType((String) parent.getItemAtPosition(pos));
             }
 
+            /**
+             * Spinner onNothingSelected.
+             * @param adapterView
+             */
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -180,6 +239,11 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
 
     }
 
+    /**
+     * Vérifie si les permissions de localisation sont accordées, sinon demande les permissions.
+     * @param context
+     * @return boolean
+     */
     private boolean checkLocationPermission(Context context) {
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -191,17 +255,33 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
         return true;
     }
 
+    /**
+     * Vérifie les résultats de la demande de permissions actuelle.
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
+    /**
+     * S'execute si les permission sont accordées suite à la demande actuelle.
+     * @param requestCode
+     * @param list
+     */
     @Override
     public void onPermissionsGranted(int requestCode, List<String> list) {
         Toast.makeText(getActivity(), "Permission accordée", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * S'execute si les permission ne sont accordées suite à la demande actuelle.
+     * @param requestCode
+     * @param list
+     */
     @Override
     public void onPermissionsDenied(int requestCode, List<String> list) {
         Toast.makeText(getActivity(), "Permission refusée, impossible d'ajouter une alerte", Toast.LENGTH_SHORT).show();

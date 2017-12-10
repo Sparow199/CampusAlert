@@ -31,7 +31,9 @@ import lahzouz.com.campusalert.viewmodel.AlertViewModel;
 
 import static android.databinding.DataBindingUtil.inflate;
 
-
+/**
+ * Classe fragment alerte.
+ */
 public class AlertFragment extends Fragment implements LifecycleOwner{
 
     private static final String KEY_PROJECT_ID = "alert_id";
@@ -42,8 +44,14 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
     private AlertViewModel viewModelDetails;
     private Snackbar snackbar;
     private Menu myMenu;
+    /**
+     * Classe AlertClickCallback, qui gère les clics.
+     */
     private final AlertClickCallback alertClickCallback = new AlertClickCallback() {
-
+        /**
+         * Supprimer une alerte.
+         * @param alert
+         */
         @Override
         public void onDeleteClick(final Alert alert) {
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
@@ -63,7 +71,11 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                                     myMenu.getItem(0).setVisible(false);
                                     viewModelDetails.deleteAlert(alert);
                                     snackbar = Snackbar.make(getView().findViewById(R.id.coordinator_details), R.string.alert_deleted, Snackbar.LENGTH_LONG).addCallback(new Snackbar.Callback() {
-
+                                        /**
+                                         * SnackBar onDismissed
+                                         * @param snackbar
+                                         * @param event
+                                         */
                                         @Override
                                         public void onDismissed(Snackbar snackbar, int event) {
                                             //see Snackbar.Callback docs for event details
@@ -74,6 +86,10 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
 
                                         }
 
+                                        /**
+                                         * SnackBar onShown
+                                         * @param snackbar
+                                         */
                                         @Override
                                         public void onShown(Snackbar snackbar) {
 
@@ -93,7 +109,15 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
                                     snackbar.show();
                                 }
                             })
+                            /**
+                             * Classe DialogInterface.
+                             */
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                /**
+                                 * DialogInterface onClick.
+                                 * @param dialog
+                                 * @param which
+                                 */
                                 public void onClick(DialogInterface dialog, int which) {
 
                                 }
@@ -106,22 +130,36 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
             }
         }
 
+        /**
+         * Afficher le détail d'une alerte.
+         * @param alert
+         */
         @Override
         public void onClick(Alert alert) {
         }
 
+        /**
+         * Ouvrir le fragment d'ajout de nouvelle alerte.
+         */
         @Override
         public void onAddClick() {
         }
 
+        /**
+         * Enregistrer une alerte.
+         * @param alert
+         */
         @Override
         public void onSaveClick(Alert alert) {
         }
 
     };
 
+
     /**
-     * Creates alert fragment for specific alert ID
+     * Crée un fragment avec l'id de l'alerte.
+     * @param alertID
+     * @return AlertFragment
      */
     public static AlertFragment forAlert(long alertID) {
 
@@ -134,6 +172,13 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         return fragment;
     }
 
+    /**
+     * Fragment onCreateView.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -145,6 +190,11 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         return binding.getRoot();
     }
 
+    /**
+     * Fragment onViewCreated.
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -154,6 +204,10 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         className = this.getClass().getName();
     }
 
+    /**
+     * Fragment onActivityCreated.
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -174,6 +228,10 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
 
     }
 
+    /**
+     * Observer LiveData de l'alerte.
+     * @param viewModel
+     */
     private void observeViewModel(final AlertViewModel viewModel) {
         // Observe alert data
         viewModel.getObservableProject().observe(this, new Observer<Alert>() {
@@ -187,6 +245,11 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         });
     }
 
+    /**
+     * Menu onViewCreated.
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -195,6 +258,11 @@ public class AlertFragment extends Fragment implements LifecycleOwner{
         myMenu = menu;
     }
 
+    /**
+     * Menu onOptionsItemSelected.
+     * @param item
+     * @return boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection

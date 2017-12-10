@@ -18,56 +18,88 @@ import lahzouz.com.campusalert.service.model.Alert;
 import static lahzouz.com.campusalert.service.database.InitDatabase.initAlertList;
 import static lahzouz.com.campusalert.view.ui.AlertListFragment.TAG;
 
-
+/**
+ * Classe Liste viewModel qui gère la connexion entre la partie vue et modèle.
+ */
 public class AlertListViewModel extends AndroidViewModel implements LifecycleObserver {
 
     private LiveData<List<Alert>> alertListObservable;
     private AppDatabase appDatabase;
 
+    /**
+     * Constructeur.
+     * @param application
+     */
     public AlertListViewModel(Application application) {
         super(application);
         appDatabase = AppDatabase.getAppDatabase(this.getApplication());
         alertListObservable = appDatabase.AlertModel().getAll();
     }
 
+    /**
+     * Insérer une liste d'alertes.
+     * @param list
+     */
     private void insertAllAlerts(List<Alert> list) {
         new InsertAllAlertsAsync(list).execute();
     }
 
+    /**
+     * Supprimer toutes les alertes.
+     */
     private void deleteAllAlerts() {
         new DeleteAllAlertsAsync().execute();
     }
 
     /**
-     * Expose the LiveData Projects query so the UI can observe it.
+     * Getter
+     * @return LiveData<List<Alert>>
      */
     public LiveData<List<Alert>> getProjectListObservable() {
         return alertListObservable;
     }
 
+    /**
+     * Supprimer et initialiser la base de données.
+     */
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void create() {
         deleteAllAlerts();
         insertAllAlerts(initAlertList());
     }
 
+    /**
+     * Async task pour insérer une liste d'alerte.
+     */
     @SuppressLint("StaticFieldLeak")
     private class InsertAllAlertsAsync extends AsyncTask<Void, Void, Void> {
 
         private List<Alert> alertList;
 
+        /**
+         * Constructeur.
+         * @param alertList
+         */
         InsertAllAlertsAsync(List<Alert> alertList) {
             super();
             // do stuff
             this.alertList=alertList;
         }
 
+        /**
+         * AsyncTask onPreExecute.
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             //Perform pre-adding operation here.
         }
 
+        /**
+         * AsyncTask doInBackground.
+         * @param voids
+         * @return null
+         */
         @Override
         protected Void doInBackground(Void... voids) {
             //Let's add some dummy data to the database.
@@ -76,6 +108,10 @@ public class AlertListViewModel extends AndroidViewModel implements LifecycleObs
             return null;
         }
 
+        /**
+         * AsyncTask onPostExecute.
+         * @param aVoid
+         */
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
@@ -83,15 +119,25 @@ public class AlertListViewModel extends AndroidViewModel implements LifecycleObs
         }
     }
 
+    /**
+     * AsyncTask supprimer toutes les alertes.
+     */
     @SuppressLint("StaticFieldLeak")
     private class DeleteAllAlertsAsync extends AsyncTask<Void, Void, Void> {
-
+        /**
+         * AsyncTask onPreExecute.
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             //Perform pre-adding operation here.
         }
 
+        /**
+         * AsyncTask doInBackground.
+         * @param voids
+         * @return null
+         */
         @Override
         protected Void doInBackground(Void... voids) {
             //Let's add some dummy data to the database.
@@ -100,6 +146,10 @@ public class AlertListViewModel extends AndroidViewModel implements LifecycleObs
             return null;
         }
 
+        /**
+         * AsyncTask onPostExecute.
+         * @param aVoid
+         */
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);

@@ -6,7 +6,9 @@ import java.util.List;
 
 import lahzouz.com.campusalert.service.model.Alert;
 
-
+/**
+ * Classe qui permet créé les objets nécessaires au remplissage de la base de données.
+ */
 public class InitDatabase {
 
     private static Alert alt1 = new Alert("Arbre à tailler", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. 1", "Cité Scientifique, 59650 Villeneuve-d'Ascq", 50.6091409, 3.1365931, new Date());
@@ -26,6 +28,10 @@ public class InitDatabase {
     private static Alert alt15 = new Alert("Autre", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. 15", "Cité Scientifique, 59650 Villeneuve-d'Ascq", 50.6091409, 3.1365931, new Date());
     private static List<Alert> alerts = new ArrayList<>();
 
+    /**
+     * Initialise la liste des alertes.
+     * @return List<Alert>
+     */
     public static List<Alert> initAlertList() {
         alerts.add(alt1);
         alerts.add(alt2);

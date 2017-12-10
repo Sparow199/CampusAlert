@@ -11,9 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import lahzouz.com.campusalert.R;
 import lahzouz.com.campusalert.viewmodel.AlertListViewModel;
 
-
+/**
+ * Classe de l'activitée principale.
+ */
 public class MainActivity extends AppCompatActivity {
-
+    /**
+     * Activity onCreate.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
         this.getLifecycle().addObserver(viewModelList);
     }
 
+
     /**
-     * Shows the (new) alert fragment
+     * Ajouter un fragment au sommet de la pile.
+     * @param fragment
      */
     public void show(Fragment fragment) {
 
@@ -49,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Supprimer un fragment de la pile.
+     * @param className
+     */
     public void removeCurrentFragment(String className){
         getSupportFragmentManager().popBackStack(className, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
