@@ -7,7 +7,7 @@ import java.util.List;
 import lahzouz.com.campusalert.service.model.Alert;
 
 /**
- * Classe qui permet créé les objets nécessaires au remplissage de la base de données.
+ * Classe qui permet crée les objets nécessaires au remplissage de la base de données.
  */
 public class InitDatabase {
 

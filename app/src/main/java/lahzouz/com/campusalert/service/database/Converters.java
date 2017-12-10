@@ -5,7 +5,7 @@ import android.arch.persistence.room.TypeConverter;
 import java.util.Date;
 
 /**
- * Classe qui permet d'applatir les objets de type complexe afin de les stockés en base de données.
+ * Classe qui permet d'aplatir les objets du type complexes afin de les stocker en base de données.
  */
 public class Converters {
     /**

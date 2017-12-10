@@ -43,7 +43,7 @@ public class Alert {
     }
 
     /**
-     * Constructeur numéro 2
+     * Constructeur avec paramètres.
      * @param type
      * @param description
      * @param address
