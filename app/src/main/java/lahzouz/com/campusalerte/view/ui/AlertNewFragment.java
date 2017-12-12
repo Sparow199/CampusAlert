@@ -64,7 +64,7 @@ public class AlertNewFragment extends Fragment implements LifecycleOwner,EasyPer
             alert.setLatitude(alertGlobal.getLatitude());
 
             if (alert.getType() != null && !alert.getType().equals("")) {
-                if (alert.getLatitude() != -2 && alert.getLongitude() != -2) {
+                if (alert.getLatitude() != -404 && alert.getLongitude() != -404) {
                     if (alert.getAddress() != null && !alert.getAddress().equals("")) {
                         viewModelDetails.insertAlert(alert);
                         assert (getActivity()) != null;

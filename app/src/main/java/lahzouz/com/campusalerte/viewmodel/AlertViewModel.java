@@ -30,7 +30,7 @@ import lahzouz.com.campusalerte.service.model.Alert;
 import static lahzouz.com.campusalerte.view.ui.AlertListFragment.TAG;
 
 /**
- *  * Classe Alert viewModel qui gère la connexion entre la partie vue et modèle.
+ * Classe Alert viewModel qui gère la connexion entre la partie vue et modèle.
  */
 public class AlertViewModel extends AndroidViewModel {
     private final LiveData<Alert> alertObservable;

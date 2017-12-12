@@ -71,5 +71,4 @@ dependencies {
 
     // Easy permission
     implementation 'pub.devrel:easypermissions:1.0.1'
-
 }
