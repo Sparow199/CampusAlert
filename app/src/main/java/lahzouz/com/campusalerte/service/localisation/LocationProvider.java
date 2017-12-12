@@ -1,4 +1,4 @@
-package lahzouz.com.campusalert.service.localisation;
+package lahzouz.com.campusalerte.service.localisation;
 
 import android.Manifest;
 import android.content.Context;

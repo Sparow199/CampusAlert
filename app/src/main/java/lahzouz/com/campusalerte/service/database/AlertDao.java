@@ -1,4 +1,4 @@
-package lahzouz.com.campusalert.service.database;
+package lahzouz.com.campusalerte.service.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -8,7 +8,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import lahzouz.com.campusalert.service.model.Alert;
+import lahzouz.com.campusalerte.service.model.Alert;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 

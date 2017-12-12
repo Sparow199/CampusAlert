@@ -1,4 +1,4 @@
-package lahzouz.com.campusalert.viewmodel;
+package lahzouz.com.campusalerte.viewmodel;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -23,11 +23,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
-import lahzouz.com.campusalert.service.database.AppDatabase;
-import lahzouz.com.campusalert.service.localisation.LocationProvider;
-import lahzouz.com.campusalert.service.model.Alert;
+import lahzouz.com.campusalerte.service.database.AppDatabase;
+import lahzouz.com.campusalerte.service.localisation.LocationProvider;
+import lahzouz.com.campusalerte.service.model.Alert;
 
-import static lahzouz.com.campusalert.view.ui.AlertListFragment.TAG;
+import static lahzouz.com.campusalerte.view.ui.AlertListFragment.TAG;
 
 /**
  *  * Classe Alert viewModel qui gère la connexion entre la partie vue et modèle.

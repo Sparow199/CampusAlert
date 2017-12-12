@@ -1,4 +1,4 @@
-package lahzouz.com.campusalert.service.database;
+package lahzouz.com.campusalerte.service.database;
 
 import android.arch.persistence.room.TypeConverter;
 

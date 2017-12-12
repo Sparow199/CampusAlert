@@ -9,12 +9,12 @@
 
         <variable
             name="alert"
-            type="lahzouz.com.campusalert.service.model.Alert" />
+            type="lahzouz.com.campusalerte.service.model.Alert" />
 
         <variable
             name="callback"
-            type="lahzouz.com.campusalert.view.callback.AlertClickCallback " />
-        <variable name="alertViewModel" type="lahzouz.com.campusalert.viewmodel.AlertViewModel"/>
+            type="lahzouz.com.campusalerte.view.callback.AlertClickCallback " />
+        <variable name="alertViewModel" type="lahzouz.com.campusalerte.viewmodel.AlertViewModel"/>
     </data>
 
 
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="lahzouz.com.campusalert.view.ui.AlertFragment">
+        tools:context="lahzouz.com.campusalerte.view.ui.AlertFragment">
 
         <TextView
             android:id="@+id/loading_alert"

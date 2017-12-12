@@ -1,6 +1,6 @@
-package lahzouz.com.campusalert.view.callback;
+package lahzouz.com.campusalerte.view.callback;
 
-import lahzouz.com.campusalert.service.model.Alert;
+import lahzouz.com.campusalerte.service.model.Alert;
 
 /**
  * Interface qui définit les différents clics sur l'application.

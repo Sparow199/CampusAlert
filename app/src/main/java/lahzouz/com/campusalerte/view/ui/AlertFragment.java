@@ -1,4 +1,4 @@
-package lahzouz.com.campusalert.view.ui;
+package lahzouz.com.campusalerte.view.ui;
 
 import android.app.AlertDialog;
 import android.arch.lifecycle.Lifecycle;
@@ -23,11 +23,11 @@ import android.view.ViewGroup;
 
 import java.util.concurrent.ExecutionException;
 
-import lahzouz.com.campusalert.R;
-import lahzouz.com.campusalert.databinding.FragmentAlertDetailsBinding;
-import lahzouz.com.campusalert.service.model.Alert;
-import lahzouz.com.campusalert.view.callback.AlertClickCallback;
-import lahzouz.com.campusalert.viewmodel.AlertViewModel;
+import lahzouz.com.campusalerte.R;
+import lahzouz.com.campusalerte.databinding.FragmentAlertDetailsBinding;
+import lahzouz.com.campusalerte.service.model.Alert;
+import lahzouz.com.campusalerte.view.callback.AlertClickCallback;
+import lahzouz.com.campusalerte.viewmodel.AlertViewModel;
 
 import static android.databinding.DataBindingUtil.inflate;
 

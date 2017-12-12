@@ -3,9 +3,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="alert" type="lahzouz.com.campusalert.service.model.Alert"/>
-        <variable name="callback" type="lahzouz.com.campusalert.view.callback.AlertClickCallback"/>
-        <variable name="alertViewModel" type="lahzouz.com.campusalert.viewmodel.AlertViewModel"/>
+        <variable name="alert" type="lahzouz.com.campusalerte.service.model.Alert"/>
+        <variable name="callback" type="lahzouz.com.campusalerte.view.callback.AlertClickCallback"/>
+        <variable name="alertViewModel" type="lahzouz.com.campusalerte.viewmodel.AlertViewModel"/>
     </data>
 
     <android.support.v7.widget.CardView

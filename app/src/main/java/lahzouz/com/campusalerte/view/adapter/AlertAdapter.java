@@ -1,4 +1,4 @@
-package lahzouz.com.campusalert.view.adapter;
+package lahzouz.com.campusalerte.view.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 import java.util.List;
 import java.util.Objects;
 
-import lahzouz.com.campusalert.R;
-import lahzouz.com.campusalert.databinding.AlertListItemBinding;
-import lahzouz.com.campusalert.service.model.Alert;
-import lahzouz.com.campusalert.view.callback.AlertClickCallback;
+import lahzouz.com.campusalerte.R;
+import lahzouz.com.campusalerte.databinding.AlertListItemBinding;
+import lahzouz.com.campusalerte.service.model.Alert;
+import lahzouz.com.campusalerte.view.callback.AlertClickCallback;
 
 /**
  * Classe qui permet d'adapter les données pour les transmettre à la recycler view.

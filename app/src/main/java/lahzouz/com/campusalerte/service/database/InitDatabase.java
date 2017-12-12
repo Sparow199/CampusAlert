@@ -1,10 +1,10 @@
-package lahzouz.com.campusalert.service.database;
+package lahzouz.com.campusalerte.service.database;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import lahzouz.com.campusalert.service.model.Alert;
+import lahzouz.com.campusalerte.service.model.Alert;
 
 /**
  * Classe qui permet crée les objets nécessaires au remplissage de la base de données.

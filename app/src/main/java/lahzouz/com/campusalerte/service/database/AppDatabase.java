@@ -1,4 +1,4 @@
-package lahzouz.com.campusalert.service.database;
+package lahzouz.com.campusalerte.service.database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-import lahzouz.com.campusalert.service.model.Alert;
+import lahzouz.com.campusalerte.service.model.Alert;
 
 /**
  * Classe abstraite qui gère la création d'une instance du DAO.

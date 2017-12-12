@@ -1,4 +1,4 @@
-package lahzouz.com.campusalert.view.ui;
+package lahzouz.com.campusalerte.view.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import lahzouz.com.campusalert.R;
-import lahzouz.com.campusalert.viewmodel.AlertListViewModel;
+import lahzouz.com.campusalerte.R;
+import lahzouz.com.campusalerte.viewmodel.AlertListViewModel;
 
 /**
  * Classe de l'activitée principale.

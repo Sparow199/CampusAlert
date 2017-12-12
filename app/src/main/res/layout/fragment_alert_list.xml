@@ -12,7 +12,7 @@
 
         <variable
             name="callback"
-            type="lahzouz.com.campusalert.view.callback.AlertClickCallback" />
+            type="lahzouz.com.campusalerte.view.callback.AlertClickCallback" />
 
     </data>
 
@@ -22,7 +22,7 @@
         android:background="@color/cardview_light_background"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        tools:context="lahzouz.com.campusalert.view.ui.AlertListFragment">
+        tools:context="lahzouz.com.campusalerte.view.ui.AlertListFragment">
 
         <TextView
             android:id="@+id/loading_alerts"

@@ -1,4 +1,4 @@
-package lahzouz.com.campusalert.service.model;
+package lahzouz.com.campusalerte.service.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -8,7 +8,7 @@ import android.arch.persistence.room.TypeConverters;
 
 import java.util.Date;
 
-import lahzouz.com.campusalert.service.database.Converters;
+import lahzouz.com.campusalerte.service.database.Converters;
 
 /**
  * Classe modèle, permets de persister l'objet Alert.

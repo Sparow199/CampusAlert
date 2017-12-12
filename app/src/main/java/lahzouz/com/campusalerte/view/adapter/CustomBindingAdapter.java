@@ -1,4 +1,4 @@
-package lahzouz.com.campusalert.view.adapter;
+package lahzouz.com.campusalerte.view.adapter;
 
 import android.databinding.BindingAdapter;
 import android.view.View;
