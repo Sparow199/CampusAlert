@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CampusAlerte.iml" filepath="$PROJECT_DIR$/CampusAlerte.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CampusAlert.iml" filepath="$PROJECT_DIR$/CampusAlert.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
