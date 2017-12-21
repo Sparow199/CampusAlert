@@ -1,6 +1,7 @@
 # For more informations, please read official documentation -> https://docs.travis-ci.com/user/languages/android/
 sudo: required
-
+notifications:
+  email: false 
 language: android
 jdk: oraclejdk8
 dist: trusty
