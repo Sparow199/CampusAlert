@@ -55,7 +55,7 @@ workflows:
   version: 2
   build_test_and_deploy:
     jobs:
-      - build
+     - build
      - test_api_v25:
          requires:
            - build
