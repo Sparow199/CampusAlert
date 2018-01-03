@@ -1,18 +1,52 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/code
+    working_directory: ~/workspace
     docker:
       - image: circleci/android:api-27-alpha
     environment:
       JVM_OPTS: "-Xmx4096m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2"
     steps:
+      - run:
+          name: Lists installed targets
+          command: android list target
+          environment:
+            TERM: dumb
+
+      - run:
+          name: List available targets and other sdk modules
+          command: sdkmanager --list --include_obsolete --verbose
+          environment:
+            TERM: dumb
+
+      #- run:
+      #    name: Install custom system image
+      #    command: sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
+      #    environment:
+      #      TERM: dumb
+
+      - run:
+          name: Create avd
+       #   command: echo no | avdmanager create avd -n testEmulator -k "system-images;android-23;google_apis;armeabi-v7a"
+          command: echo no | avdmanager create avd -n testEmulator -k "system-images;android-24;default;armeabi-v7a"
+          environment:
+            TERM: dumb
+
+      - run:
+          name: Start emulator
+          command: /opt/android-sdk-linux/emulator/emulator -avd testEmulator -no-audio -no-window
+          background: true
+          environment:
+            TERM: dumb
+
       - checkout
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
+          environment:
+            TERM: dumb          
       - save_cache:
           paths:
             - ~/.gradle
@@ -20,16 +54,32 @@ jobs:
       - run:
           name: Accept licenses
           command: yes | sdkmanager --licenses || true
+          environment:
+            TERM: dumb
       - run:
-          name: Setup emulator
-          command: sdkmanager "system-images;android-24;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-24;default;armeabi-v7a"
+          name: Wait for emulator
+          command: ./android-wait-for-boot.sh
+          environment:
+            TERM: dumb
+
       - run:
-          name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on
-          background: true
+          name: Remove lock screen
+          command: adb shell input keyevent 82
+          environment:
+            TERM: dumb
+
       - run:
-          name: Run Tests
-          command: ./gradlew connectedAndroidTest 
+          name: Unit testing
+          command: ./gradlew test
+          environment:
+            TERM: dumb
+
+      - run:
+          name: Instrumentation testing
+          command: ./gradlew connectedCheck
+          environment:
+            TERM: dumb
+            
       - store_artifacts:
           path: app/build/reports
           destination: reports
