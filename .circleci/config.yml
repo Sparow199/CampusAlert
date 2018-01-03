@@ -6,7 +6,7 @@ jobs:
       # Android the primary container
       - image: circleci/android:api-27-alpha
     environment:
-JVM_OPTS: "-Xmx4096m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2"
+      JVM_OPTS: "-Xmx4096m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2"
     steps:
       - checkout
       - restore_cache:
@@ -23,7 +23,7 @@ JVM_OPTS: "-Xmx4096m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCT
     docker:
         - image: circleci/android:api-27-alpha
     environment:
-JVM_OPTS: "-Xmx4096m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2"
+      JVM_OPTS: "-Xmx4096m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2"
     steps:
       - checkout
       - run:
