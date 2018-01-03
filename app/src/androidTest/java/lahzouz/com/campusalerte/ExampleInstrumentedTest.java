@@ -20,7 +20,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() throws Exception {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
-
-        assertEquals("lahzouz.com.campusalerte", appContext.getPackageName());
+        assertEquals("lahzouz.com.campusalert", appContext.getPackageName());
     }
 }
