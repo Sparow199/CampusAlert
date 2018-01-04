@@ -96,10 +96,10 @@ jobs:
             destination: artifact-file
         - run:
             name: Deploy Apk to Github
-            commands:
-                - sudo apt-get install golang-go
-                - go get github.com/tcnksm/ghr 
-                - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
+            command: |
+                sudo apt-get install golang-go &&
+                go get github.com/tcnksm/ghr &&
+                ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
 
 
 workflows:
