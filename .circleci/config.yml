@@ -7,9 +7,6 @@ jobs:
       - image: circleci/android:api-27-alpha
     environment:
       JVM_OPTS: -Xmx2048m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
-    dependencies:
-        pre:
-          - go get github.com/tcnksm/ghr
     steps:
       - checkout
       - restore_cache:
@@ -72,6 +69,9 @@ jobs:
   deploy:
     machine: true
     working_directory: ~/campus
+    dependencies:
+      pre:
+        - go get github.com/tcnksm/ghr
     steps:
       - checkout
       - run:
@@ -92,4 +92,7 @@ workflows:
           filters:
             tags: 
               only: /(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)/
+            branches:
+              ignore: /.*/
+
            
