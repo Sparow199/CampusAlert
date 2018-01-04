@@ -3,6 +3,7 @@ version: 2
 jobs:
   build:
     working_directory: ~/campus
+    parallelism: 2
     docker:
       # Android the primary container
       - image: circleci/android:api-27-alpha
@@ -40,8 +41,7 @@ jobs:
 
       - deploy:
           name: Deploy Apk to Github
-          commands:
-            - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
+          command: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
 
   test_api_v22:
     working_directory: ~/campus
