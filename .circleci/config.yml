@@ -73,6 +73,7 @@ jobs:
         - image: circleci/android:api-27-alpha
       environment:
         JVM_OPTS: -Xmx2048m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
+        BASH_ENV: ~/.bashrc
       dependencies:
         pre:
          - sudo apt-get install golang-go
@@ -98,6 +99,7 @@ jobs:
             name: Deploy Apk to Github
             command: |
                 sudo apt-get install golang-go &&
+                echo 'export PATH=/usr/local/go/bin:$PATH' >> $BASH_ENV &&
                 go get github.com/tcnksm/ghr &&
                 ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
 
@@ -115,4 +117,4 @@ workflows:
             - build
           filters:
             tags:
-              only: /.*/
+              only: /\d+(\.\d+){2}(-(alpha|beta)(\d+)?)?/
