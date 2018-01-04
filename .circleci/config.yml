@@ -8,10 +8,6 @@ jobs:
       - image: circleci/android:api-27-alpha
     environment:
       JVM_OPTS: -Xmx2048m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
-    dependencies:
-        pre:
-          - sudo apt-get install golang-go
-          - go get github.com/tcnksm/ghr
     steps:
       - checkout
       - restore_cache:
@@ -37,10 +33,6 @@ jobs:
       - store_artifacts:
           path: app/build/outputs/apk/release/
           destination: artifact-file
-
-      - deploy:
-          name: Deploy Apk to Github
-          command: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
 
   test_api_v22:
     working_directory: ~/campus
@@ -75,12 +67,37 @@ jobs:
       - store_test_results:
           path: app/build/test-results
 
-deployment:
-    release:
-        tag: /v[0-9]+(\.[0-9]+){2}(-(rc|beta)[0-9]+)?/
-        owner: circleci #owner is optional
-        commands:
-          - echo "make tags run in 2.0"
+deploy:
+    working_directory: ~/campus
+    docker:
+        - image: circleci/android:api-27-alpha
+    environment:
+      JVM_OPTS: -Xmx2048m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
+    dependencies:
+      pre:
+        - sudo apt-get install golang-go
+        - go get github.com/tcnksm/ghr
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Run Build
+          command: ./gradlew assembleRelease
+      - store_artifacts:
+          path: app/build/outputs/apk/release/
+          destination: artifact-file
+      - run:
+         name: Deploy Apk to Github
+         command: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
+
 
 workflows:
   version: 2
@@ -90,4 +107,11 @@ workflows:
       - test_api_v22:
           requires:
             - build
-      - 
+      - deploy:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+){2}(-(rc|beta)[0-9]+)?/
+            branches:
+              only: master
