@@ -7,6 +7,9 @@ jobs:
       - image: circleci/android:api-27-alpha
     environment:
       JVM_OPTS: -Xmx2048m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=2 -XX:ParallelGCThreads=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2
+    dependencies:
+        pre:
+          - go get github.com/tcnksm/ghr
     steps:
       - checkout
       - restore_cache:
@@ -19,9 +22,6 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Get GHR
-          command: go get github.com/tcnksm/ghr
-      - run:
           name: Run Tests
           command: ./gradlew lint test
       - store_artifacts:
@@ -29,7 +29,6 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
-
       - run:
           name: Run Build
           command: ./gradlew assembleRelease
