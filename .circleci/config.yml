@@ -3,7 +3,6 @@ version: 2
 jobs:
   build:
     working_directory: ~/campus
-    parallelism: 1
     docker:
       # Android the primary container
       - image: circleci/android:api-27-alpha
