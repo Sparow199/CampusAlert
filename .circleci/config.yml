@@ -83,3 +83,6 @@ workflows:
       - test_api_v22:
           requires:
             - build
+      - deployment:
+          requires:
+            - build
